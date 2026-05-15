@@ -11,7 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import com.example.noet.ui.theme.backgroundColor
 import com.example.noet.ui.theme.originalColor
 import com.example.noet.ui.theme.primaryColor
 
