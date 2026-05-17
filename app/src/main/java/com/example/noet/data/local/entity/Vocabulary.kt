@@ -14,7 +14,7 @@ data class Vocabulary(
     val meaningEn: String,
     val exampleVi: String,
     val exampleEn: String,
-    val created_at: Timestamp,
-    val updated_at: Timestamp,
-    val deleted_at: Timestamp
+    val created_at: Long = System.currentTimeMillis(),
+    val updated_at: Long = System.currentTimeMillis(),
+    val deleted_at: Long? = null
 )

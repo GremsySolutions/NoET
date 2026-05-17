@@ -1,30 +1,122 @@
 package com.example.noet.presentation.ui.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.data.Group
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.fastCbrt
 import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
+import com.example.noet.ui.theme.backgroundColor
+import com.example.noet.ui.theme.backgroundColor2
+import com.example.noet.ui.theme.backgroundPrimary
+import com.example.noet.ui.theme.deleteColor
 import com.example.noet.ui.theme.primaryColor
 import com.example.noet.ui.theme.textColor
 
 @Composable
 fun CardListHome(modifier: Modifier = Modifier) {
 
-    LazyColumn {
+    var showDialog by remember { mutableStateOf(false) }
+    var itemToDelete by remember { mutableStateOf("") }
+    val itemsList = listOf(
+        "Vocabulary",
+        "Grammar",
+        "Pronunciation",
+        "Listening",
+        "Reading",
+        "Writing",
+        "Speaking"
+    )
 
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog = false
+            },
+            title = {
+                Text(
+                    text = "Xác nhận xoá",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "Bạn có chắc chắn muốn xoá \"$itemToDelete\" không?",
+                    fontSize = 16.sp
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {showDialog = false}
+                ) {
+                    Text("Huỷ", color = primaryColor)
+                }
+            }
+
+        )
+    }
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth()
+    ){
+        items(itemsList) { word ->
+            CardItemHome(
+                word = word,
+                category = "Noun",
+                meaningVi = "Danh từ",
+                exampleVi = "I have a large vocabulary.",
+                exampleEn = "Tôi có một vốn từ vựng lớn.",
+                onClickDelete = {
+                    itemToDelete = word
+                    showDialog = true
+                },
+                onClickMore = {},
+                onClickFavorite = {},
+                onClick = {}
+            )
+            Spacer16V()
+        }
     }
 }
 
@@ -33,27 +125,38 @@ fun CardItemHome(
     word: String,
     category: String,
     meaningVi: String,
-    meaningEn: String,
     exampleVi: String,
     exampleEn: String,
-    onClick: () -> Unit
+    onClickDelete: () -> Unit,
+    onClickMore: () -> Unit,
+    onClickFavorite: () -> Unit,
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .height(IntrinsicSize.Min)
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(12.dp),
+                clip = false
+            )
+            .clip(RoundedCornerShape(12.dp))
+            .background(color = Color.White)
             .clickable(
                 onClick = onClick
             )
+            .padding(16.dp)
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_paragraph),
-            contentDescription = null
-        )
-        Spacer16H()
-        Column() {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = word,
                 color = textColor,
-                fontSize = 18.sp,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
             Spacer16V()
             Row() {
@@ -71,13 +174,109 @@ fun CardItemHome(
             }
             Spacer8V()
             Text(
-                text = exampleVi
+                text = "Ex: $exampleVi"
             )
             Spacer8V()
             Text(
-                text = " "
+                text = "Ex: $exampleEn"
             )
         }
         Spacer16H()
+        Column (
+            modifier = Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.End
+        ){
+            Row {
+                Icon(
+                    painter = painterResource(R.drawable.ic_heart_empty),
+                    contentDescription = "Favorite",
+                    tint = primaryColor,
+                    modifier = Modifier
+                        .clickable{
+                            onClickFavorite()
+                        }
+                )
+                Spacer8H()
+                Icon(
+                    painter = painterResource(R.drawable.ic_more_vert),
+                    contentDescription = "More",
+                    tint = primaryColor,
+                    modifier = Modifier
+                        .clickable{
+                            onClickMore()
+                        }
+                )
+            }
+            Icon(
+                painter = painterResource(R.drawable.ic_delete),
+                contentDescription = "Delete",
+                tint = deleteColor,
+                modifier = Modifier.clickable {
+                    onClickDelete()
+                }
+            )
+        }
     }
+}
+
+@Composable
+fun AddVocabularyDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var text by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Thêm từ vựng mới",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = primaryColor
+            )
+        },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = {text = it},
+                    placeholder = {
+                        Text(
+                            text = "Nhập từ vựng mới"
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color.White,
+                        unfocusedContainerColor = Color.White,
+                        focusedBorderColor = backgroundColor,
+                        unfocusedBorderColor = backgroundColor2,
+                        errorBorderColor = Color.Red,
+                    )
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = { onConfirm(text)},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = primaryColor
+                ),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("Dịch từ", color = Color.White)
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss
+            ) {
+                Text("Huỷ", color = Color.Gray)
+            }
+        }
+    )
 }

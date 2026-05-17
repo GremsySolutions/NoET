@@ -12,7 +12,7 @@ data class Paragraph(
     val originText: String,
     val translateText: String,
     val imagePath: String,
-    val created_at: Timestamp,
-    val updated_at: Timestamp,
-    val deleted_at: Timestamp
+    val created_at: Long = System.currentTimeMillis(),
+    val updated_at: Long = System.currentTimeMillis(),
+    val deleted_at: Long? = null
 )

@@ -1,20 +1,18 @@
 package com.example.noet.presentation.ui.components
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -22,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.noet.ui.theme.backgroundColor
+import com.example.noet.ui.theme.backgroundColor2
+import com.example.noet.ui.theme.primaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +45,8 @@ fun AppTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
+                        contentDescription = "Back",
+                        tint = primaryColor
                     )
                 }
             }
@@ -59,57 +60,37 @@ fun AppTopBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Search(
     query: String,
     onQueryChange: (String) -> Unit,
-    onSearch: (String) -> Unit,
-    active: Boolean,
-    onActiveChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    SearchBar(
-        query = query,
-        onQueryChange = onQueryChange,
-        onSearch = onSearch,
-        active = active,
-        onActiveChange = onActiveChange,
+    OutlinedTextField(
+        value = query,
+        onValueChange = onQueryChange,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(top = 8.dp),
         placeholder = {
-            Text(
-                text = "Search..."
-            )
+            Text("Tìm kiếm...")
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = Color.Gray
+                tint = primaryColor
             )
         },
-        trailingIcon = {
-            if (active && query.isNotEmpty()) {
-                IconButton(
-                    onClick = {
-                        onQueryChange("")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = null
-                    )
-                }
-            }
-        },
-        colors = SearchBarDefaults.colors(
-            containerColor = Color.White,
-            dividerColor = Color.Transparent
-        ),
-        tonalElevation = 2.dp,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = if (active) 0.dp else 16.dp)
-    ){
-
-    }
+        singleLine = true,
+        shape = RoundedCornerShape(32.dp),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            focusedBorderColor = backgroundColor,
+            unfocusedBorderColor = backgroundColor2,
+            errorBorderColor = Color.Red,
+        )
+    )
 }
