@@ -25,10 +25,4 @@ sealed class BottomNavItem (
         label = "Paragraph",
         icon = R.drawable.ic_scan
     )
-
-//    data object History: BottomNavItem(
-//        route = Screen.History.route,
-//        label = "History",
-//        icon = R.drawable.ic_paragraph
-//    )
 }

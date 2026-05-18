@@ -43,9 +43,6 @@ fun CardListCategory(
     val categories = listOf(
         listOf("1", "Vocabulary", "120", "01/10/2024"),
         listOf("2", "Grammar", "80", "28/09/2024"),
-        listOf("3", "Pronunciation", "50", "30/09/2024"),
-        listOf("4", "Listening", "70", "29/09/2024"),
-        listOf("5", "Reading", "90", "27/09/2024")
     )
 
     LazyColumn {

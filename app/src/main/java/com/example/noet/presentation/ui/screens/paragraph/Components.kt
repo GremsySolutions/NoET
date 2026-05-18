@@ -34,10 +34,6 @@ fun CardListParagraph(modifier: Modifier = Modifier) {
     val paragraphs = listOf(
         Triple("Đoạn văn 1", "20/05/2024 - 10:45 AM", "Cuộc sống là một hành trình đầy những trải nghiệm và bài học..."),
         Triple("Đoạn văn 2", "21/05/2024 - 11:30 AM", "Học tiếng Anh giúp bạn mở mang kiến thức và kết nối thế giới..."),
-        Triple("Đoạn văn 2", "21/05/2024 - 11:30 AM", "Học tiếng Anh giúp bạn mở mang kiến thức và kết nối thế giới..."),
-        Triple("Đoạn văn 2", "21/05/2024 - 11:30 AM", "Học tiếng Anh giúp bạn mở mang kiến thức và kết nối thế giới..."),
-        Triple("Đoạn văn 2", "21/05/2024 - 11:30 AM", "Học tiếng Anh giúp bạn mở mang kiến thức và kết nối thế giới..."),
-        Triple("Đoạn văn 2", "21/05/2024 - 11:30 AM", "Học tiếng Anh giúp bạn mở mang kiến thức và kết nối thế giới...")
     )
     LazyColumn {
         items(paragraphs) { items ->

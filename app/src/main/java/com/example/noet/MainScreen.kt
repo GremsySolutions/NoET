@@ -22,17 +22,14 @@ fun MainScreen() {
     val showBottomBar = currentRoute in listOf(
         Screen.Home.route,
         Screen.Category.route,
-        Screen.Paragraph.route,
-//        Screen.History.route
+        Screen.Paragraph.route
     )
 
     val showBackButton = currentRoute == "category_detail/{categoryId}/{categoryName}"
-
     val title = when (currentRoute) {
         Screen.Home.route -> "Focus Now"
         Screen.Category.route -> "Category"
         Screen.Paragraph.route -> "Paragraph"
-//        Screen.History.route -> "History"
         "category_detail/{categoryId}/{categoryName}" ->
             backStackEntry?.arguments?.getString("categoryName") ?: "Detail"
         else -> ""

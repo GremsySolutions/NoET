@@ -1,10 +1,21 @@
 package com.example.noet.data.local.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.sql.Timestamp
 
-@Entity(tableName = "paragraph")
+@Entity(tableName = "paragraph",
+    foreignKeys = [
+        ForeignKey(
+            entity = Category::class,
+            parentColumns = ["id"],
+            childColumns = ["category_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index(value = ["category_id"])]
+)
 data class Paragraph(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val category_id: Int,

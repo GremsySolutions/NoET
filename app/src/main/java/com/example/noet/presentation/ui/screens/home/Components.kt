@@ -1,6 +1,5 @@
 package com.example.noet.presentation.ui.screens.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,13 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -37,18 +34,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.data.Group
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastCbrt
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
+import com.example.noet.presentation.viewmodel.VocabularyViewModel
 import com.example.noet.ui.theme.backgroundColor
 import com.example.noet.ui.theme.backgroundColor2
-import com.example.noet.ui.theme.backgroundPrimary
 import com.example.noet.ui.theme.deleteColor
 import com.example.noet.ui.theme.primaryColor
 import com.example.noet.ui.theme.textColor
@@ -61,11 +57,6 @@ fun CardListHome(modifier: Modifier = Modifier) {
     val itemsList = listOf(
         "Vocabulary",
         "Grammar",
-        "Pronunciation",
-        "Listening",
-        "Reading",
-        "Writing",
-        "Speaking"
     )
 
     if (showDialog) {
@@ -222,13 +213,16 @@ fun CardItemHome(
 
 @Composable
 fun AddVocabularyDialog(
+    categoryId: Int,
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit,
+    viewModel: VocabularyViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     var text by remember { mutableStateOf("") }
+    var loading by remember { mutableStateOf(false) }
     AlertDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { if (!loading) onDismiss()},
         title = {
             Text(
                 text = "Thêm từ vựng mới",
@@ -249,6 +243,7 @@ fun AddVocabularyDialog(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
+                    enabled = !loading,
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedContainerColor = Color.White,
@@ -258,22 +253,45 @@ fun AddVocabularyDialog(
                         errorBorderColor = Color.Red,
                     )
                 )
+                if(loading) {
+                    Spacer8V()
+                    LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = primaryColor
+                    )
+                    Text(
+                        text = "Gemini đang dịch và tạo ví dụ...",
+                        fontSize = 12.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
             }
         },
         confirmButton = {
             Button(
-                onClick = { onConfirm(text)},
+                onClick = {
+                    loading = true
+                    viewModel.translateAndSave(text, categoryId) {
+                        loading = false
+                        onDismiss()
+                    }
+                },
+                enabled = text.isNotBlank() && !loading,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = primaryColor
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Dịch từ", color = Color.White)
+                Text(
+                    if (loading) "Đang xử lý... " else "Dịch từ", color = Color.White
+                )
             }
         },
         dismissButton = {
             TextButton(
-                onClick = onDismiss
+                onClick = onDismiss,
+                enabled = !loading
             ) {
                 Text("Huỷ", color = Color.Gray)
             }

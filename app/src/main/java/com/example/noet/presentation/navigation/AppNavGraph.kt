@@ -31,19 +31,12 @@ fun AppNavGraph(
         }
 
         composable(route = "category_detail/{categoryId}/{categoryName}") { backStackEntry ->
-            val categoryName = backStackEntry.arguments?.getString("categoryName") ?: "Detail"
-
             DetailCategoryScreen()
         }
 
         composable (route = Screen.Paragraph.route){
             ParagraphScreen()
         }
-
-//        composable (route = Screen.History.route){  }
-
-
-
     }
 
 }
