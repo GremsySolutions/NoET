@@ -1,5 +1,6 @@
 package com.example.noet.presentation.ui.screens.home
 
+import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
@@ -61,9 +63,17 @@ fun CardListHome(modifier: Modifier = Modifier) {
 
     if (showDialog) {
         AlertDialog(
+            properties = DialogProperties(
+                usePlatformDefaultWidth = false
+            ),
             onDismissRequest = {
                 showDialog = false
             },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(12.dp),
+            containerColor = backgroundColor2,
             title = {
                 Text(
                     text = "Xác nhận xoá",
@@ -78,10 +88,14 @@ fun CardListHome(modifier: Modifier = Modifier) {
                 )
             },
             confirmButton = {
-                TextButton(
-                    onClick = {showDialog = false}
+                Button(
+                    onClick = {showDialog = false},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = primaryColor
+                    ),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Huỷ", color = primaryColor)
+                    Text("Xoá ngay", color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -222,7 +236,15 @@ fun AddVocabularyDialog(
     var text by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
     AlertDialog(
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        ),
         onDismissRequest = { if (!loading) onDismiss()},
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        shape = RoundedCornerShape(12.dp),
+        containerColor = backgroundColor2,
         title = {
             Text(
                 text = "Thêm từ vựng mới",

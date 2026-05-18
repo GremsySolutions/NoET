@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.noet.presentation.ui.screens.category.CategoryScreen
 import com.example.noet.presentation.ui.screens.category.DetailCategoryScreen
 import com.example.noet.presentation.ui.screens.home.HomeScreen
+import com.example.noet.presentation.ui.screens.paragraph.CameraXScreen
 import com.example.noet.presentation.ui.screens.paragraph.ParagraphScreen
 
 @Composable
@@ -35,7 +36,20 @@ fun AppNavGraph(
         }
 
         composable (route = Screen.Paragraph.route){
-            ParagraphScreen()
+            ParagraphScreen(navController = navController)
+        }
+        composable(route = "camera_x_screen") {
+            CameraXScreen(
+                onImageCaptured = { uri ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("captured_uri", uri.toString())
+                    navController.popBackStack()
+                },
+                onBackPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 

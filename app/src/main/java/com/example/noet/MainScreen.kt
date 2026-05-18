@@ -25,13 +25,15 @@ fun MainScreen() {
         Screen.Paragraph.route
     )
 
-    val showBackButton = currentRoute == "category_detail/{categoryId}/{categoryName}"
+    val showBackButton = currentRoute == "category_detail/{categoryId}/{categoryName}" ||
+            currentRoute == "camera_x_screen"
     val title = when (currentRoute) {
         Screen.Home.route -> "Focus Now"
         Screen.Category.route -> "Category"
         Screen.Paragraph.route -> "Paragraph"
         "category_detail/{categoryId}/{categoryName}" ->
             backStackEntry?.arguments?.getString("categoryName") ?: "Detail"
+        "camera_x_screen" -> "Quét văn bản"
         else -> ""
     }
 
