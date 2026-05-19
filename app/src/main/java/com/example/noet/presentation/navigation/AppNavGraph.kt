@@ -1,7 +1,6 @@
 package com.example.noet.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -50,6 +49,9 @@ fun AppNavGraph(
                     navController.popBackStack()
                 }
             )
+        }
+        composable (route = Screen.Test.route){
+
         }
     }
 

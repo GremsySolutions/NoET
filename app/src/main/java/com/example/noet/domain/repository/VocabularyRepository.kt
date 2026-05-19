@@ -1,6 +1,8 @@
 package com.example.noet.domain.repository
 
+import com.example.noet.data.local.entity.CategoryWithVocabularies
 import com.example.noet.data.local.entity.Vocabulary
+import com.example.noet.data.local.entity.VocabularyWithCategory
 import kotlinx.coroutines.flow.Flow
 
 interface VocabularyRepository {
@@ -12,5 +14,8 @@ interface VocabularyRepository {
     suspend fun insertVocabulary(vocabulary: Vocabulary)
 
     suspend fun deleteVocabulary(id: Int)
-    suspend fun translateAndSave(word: String, categoryId: Int): Boolean
+    suspend fun translateAndSave(word: String): Boolean
+
+    suspend fun getAllVocabularyWithCategory(): Flow<List<VocabularyWithCategory>>
+
 }

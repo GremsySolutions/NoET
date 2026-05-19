@@ -21,3 +21,15 @@ data class CategoryWithParagraphs(
     )
     val paragraphs: List<Paragraph>
 )
+
+
+data class VocabularyWithCategory(
+    @Embedded val vocabulary: Vocabulary,
+    @Relation(
+        parentColumn = "category_id",
+        entityColumn = "id"
+    )
+    val category: Category
+)
+
+

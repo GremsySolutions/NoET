@@ -53,7 +53,6 @@ fun HomeScreen() {
         }
         if (showAddDialog) {
             AddVocabularyDialog(
-                categoryId = 1,
                 onDismiss = { showAddDialog = false },
                 onConfirm = {  word ->
                     showAddDialog = false

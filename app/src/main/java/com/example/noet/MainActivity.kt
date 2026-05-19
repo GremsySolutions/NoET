@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
                 withContext(Dispatchers.IO) {
                     val db = AppDatabase.getDatabase(applicationContext)
                     db.openHelper.writableDatabase
+
                 }
             }
             NoETTheme {

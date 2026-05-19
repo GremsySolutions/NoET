@@ -29,6 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.noet.R
+import com.example.noet.ui.theme.primaryColor
 import java.lang.Exception
 
 @Composable
@@ -79,7 +80,7 @@ fun CameraXScreen(
             Icon(
                 painter = painterResource(R.drawable.ic_camera),
                 contentDescription = "Take Photo",
-                tint = Color.Black,
+                tint = primaryColor,
                 modifier = Modifier.size(40.dp)
             )
         }

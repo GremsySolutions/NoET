@@ -16,10 +16,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.DatePickerDefaults.dateFormatter
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,33 +34,37 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastCbrt
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer8H
+import com.example.noet.presentation.viewmodel.CategoryViewModel
 import com.example.noet.ui.theme.primaryColor
+import java.text.SimpleDateFormat
+import java.util.Date
+import kotlin.text.format
 
 @Composable
 fun CardListCategory(
-    onCategoryClick: (String, String) -> Unit,
+    onCategoryClick: (Int, String) -> Unit,
+    viewModel: CategoryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val categories = listOf(
-        listOf("1", "Vocabulary", "120", "01/10/2024"),
-        listOf("2", "Grammar", "80", "28/09/2024"),
-    )
+    val categories by viewModel.categories.collectAsState()
 
+    val dateFormatter = SimpleDateFormat("dd/MM/yyyy")
     LazyColumn {
         items(categories) { item ->
-            val id = item[0]
-            val title = item[1]
-            val count = item[2].toInt()
-            val date = item[3]
+            val title = item.category.name
+            val count = item.vocabularies.size
+            val dateString = dateFormatter.format(Date(item.category.updated_at))
 
             CardItemCategory(
                 title = title,
                 count = count,
-                date = date,
-                onClick = { onCategoryClick(id, title) },
+                date = dateString,
+                onClick = { onCategoryClick(item.category.id, title) },
                 modifier = Modifier.padding(vertical = 8.dp)
             )
         }
@@ -181,7 +189,7 @@ fun DetailItemCategory(
                 )
             }
             Text(
-                text = "Ex: $exampleVi",
+                text = "Ví dụ: $exampleVi",
                 fontSize = 14.sp,
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 4.dp)

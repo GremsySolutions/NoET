@@ -4,7 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import com.example.noet.data.local.entity.CategoryWithVocabularies
 import com.example.noet.data.local.entity.Vocabulary
+import com.example.noet.data.local.entity.VocabularyWithCategory
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,4 +27,9 @@ interface DaoVocabulary {
 
     @Query("DELETE FROM vocabulary WHERE id = :id")
     suspend fun deleteVocabulary(id: Int)
+
+    @Transaction
+    @Query("SELECT * FROM vocabulary ORDER BY created_at DESC")
+    fun getAllVocabularyWithCategory(): Flow<List<VocabularyWithCategory>>
+
 }

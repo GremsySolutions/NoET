@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +26,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,14 +55,15 @@ import com.example.noet.ui.theme.primaryColor
 import com.example.noet.ui.theme.textColor
 
 @Composable
-fun CardListHome(modifier: Modifier = Modifier) {
+fun CardListHome(
+    viewModel: VocabularyViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier
+) {
 
     var showDialog by remember { mutableStateOf(false) }
     var itemToDelete by remember { mutableStateOf("") }
-    val itemsList = listOf(
-        "Vocabulary",
-        "Grammar",
-    )
+    var idToDelete by remember { mutableStateOf(-1) }
+    val vocabularies by viewModel.vocabularies.collectAsState()
 
     if (showDialog) {
         AlertDialog(
@@ -89,7 +93,10 @@ fun CardListHome(modifier: Modifier = Modifier) {
             },
             confirmButton = {
                 Button(
-                    onClick = {showDialog = false},
+                    onClick = {
+                        showDialog = false
+                        viewModel.deleteVocabulary(idToDelete)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = primaryColor
                     ),
@@ -105,20 +112,20 @@ fun CardListHome(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
     ){
-        items(itemsList) { word ->
+        items(vocabularies) { word ->
             CardItemHome(
-                word = word,
-                category = "Noun",
-                meaningVi = "Danh từ",
-                exampleVi = "I have a large vocabulary.",
-                exampleEn = "Tôi có một vốn từ vựng lớn.",
+                word = word.vocabulary.word,
+                category = word.category.name,
+                meaningVi = word.vocabulary.meaningVi,
+                exampleVi = word.vocabulary.exampleVi,
+                exampleEn = word.vocabulary.exampleEn,
                 onClickDelete = {
-                    itemToDelete = word
+                    itemToDelete = word.vocabulary.word
                     showDialog = true
+                    idToDelete = word.vocabulary.id
                 },
                 onClickMore = {},
-                onClickFavorite = {},
-                onClick = {}
+                onClickFavorite = {}
             )
             Spacer16V()
         }
@@ -134,8 +141,7 @@ fun CardItemHome(
     exampleEn: String,
     onClickDelete: () -> Unit,
     onClickMore: () -> Unit,
-    onClickFavorite: () -> Unit,
-    onClick: () -> Unit,
+    onClickFavorite: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -149,9 +155,6 @@ fun CardItemHome(
             )
             .clip(RoundedCornerShape(12.dp))
             .background(color = Color.White)
-            .clickable(
-                onClick = onClick
-            )
             .padding(16.dp)
     ) {
         Column(
@@ -170,7 +173,14 @@ fun CardItemHome(
                     color = primaryColor,
                     fontSize = 16.sp,
                 )
-                Spacer8H()
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "|",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+                Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = meaningVi,
                     color = textColor,
@@ -179,11 +189,11 @@ fun CardItemHome(
             }
             Spacer8V()
             Text(
-                text = "Ex: $exampleVi"
+                text = "Ví dụ: $exampleVi"
             )
             Spacer8V()
             Text(
-                text = "Ex: $exampleEn"
+                text ="Ex: $exampleEn"
             )
         }
         Spacer16H()
@@ -227,7 +237,6 @@ fun CardItemHome(
 
 @Composable
 fun AddVocabularyDialog(
-    categoryId: Int,
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit,
     viewModel: VocabularyViewModel = hiltViewModel(),
@@ -235,11 +244,29 @@ fun AddVocabularyDialog(
 ) {
     var text by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
+    val errorMessage by viewModel.error.collectAsState()
+
+    val inputError = remember(text) {
+        when {
+            text.isEmpty() -> null
+            text.any { it.isDigit() } -> "Từ vựng không được chứa chữ số"
+            text.length < 2 -> "Từ vựng quá ngắn"
+            !text.all { it.isLetter() || it == '-' || it.isWhitespace() } -> "Từ vựng không được chứa ký tự đặc biệt"
+            else -> null
+        }
+    }
+
+    val displayError = inputError ?: errorMessage
     AlertDialog(
         properties = DialogProperties(
             usePlatformDefaultWidth = false
         ),
-        onDismissRequest = { if (!loading) onDismiss()},
+        onDismissRequest = {
+            if (!loading){
+                viewModel.clear()
+                onDismiss()
+            }
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
@@ -257,7 +284,12 @@ fun AddVocabularyDialog(
             Column {
                 OutlinedTextField(
                     value = text,
-                    onValueChange = {text = it},
+                    onValueChange = {
+                        text = it
+                        if (errorMessage != null) {
+                            viewModel.clear()
+                        }
+                    },
                     placeholder = {
                         Text(
                             text = "Nhập từ vựng mới"
@@ -275,6 +307,16 @@ fun AddVocabularyDialog(
                         errorBorderColor = Color.Red,
                     )
                 )
+
+                if (displayError != null) {
+                    Text(
+                        text = displayError!!,
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+
                 if(loading) {
                     Spacer8V()
                     LinearProgressIndicator(
@@ -294,9 +336,9 @@ fun AddVocabularyDialog(
             Button(
                 onClick = {
                     loading = true
-                    viewModel.translateAndSave(text, categoryId) {
+                    viewModel.translateAndSave(text) {
                         loading = false
-                        onDismiss()
+                        if (viewModel.error.value == null ) onDismiss()
                     }
                 },
                 enabled = text.isNotBlank() && !loading,
@@ -312,7 +354,10 @@ fun AddVocabularyDialog(
         },
         dismissButton = {
             TextButton(
-                onClick = onDismiss,
+                onClick = {
+                    viewModel.clear()
+                    onDismiss()
+                },
                 enabled = !loading
             ) {
                 Text("Huỷ", color = Color.Gray)

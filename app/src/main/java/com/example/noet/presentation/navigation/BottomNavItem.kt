@@ -25,4 +25,10 @@ sealed class BottomNavItem (
         label = "Paragraph",
         icon = R.drawable.ic_scan
     )
+
+    data object Test: BottomNavItem(
+        route = Screen.Test.route,
+        label = "Test",
+        icon = R.drawable.ic_test
+    )
 }

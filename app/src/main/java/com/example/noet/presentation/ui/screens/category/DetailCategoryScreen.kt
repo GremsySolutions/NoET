@@ -6,35 +6,39 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.noet.presentation.viewmodel.CategoryViewModel
 
 @Composable
 fun DetailCategoryScreen(
+    viewModel: CategoryViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val vocabFakeList = listOf(
-        listOf("employee", "nhân viên", "Anh ấy là một nhân viên giỏi.", "He is a good employee."),
-        listOf("project", "dự án", "Dự án này rất quan trọng.", "This project is very important."),
-        listOf("deadline", "thời hạn", "Tôi phải xong trước thời hạn.", "I must finish before the deadline.")
-    )
+    val vocabularies by viewModel.categoryDetail.collectAsState()
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        items(vocabFakeList) { item ->
-            Spacer(modifier = Modifier.height(16.dp))
-            DetailItemCategory(
-                word = item[0],
-                meaningVi = item[1],
-                exampleVi = item[2],
-                exampleEn = item[3],
-                onClickMore = {
+        vocabularies?.vocabularies?.let {list ->
+            items(list) { item ->
+                Spacer(modifier = Modifier.height(16.dp))
+                DetailItemCategory(
+                    word = item.word,
+                    meaningVi = item.meaningVi,
+                    exampleVi = item.exampleVi,
+                    exampleEn = item.exampleEn,
+                    onClickMore = {
 
-                }
-            )
+                    }
+                )
 
+            }
         }
+
     }
 }

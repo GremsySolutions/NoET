@@ -1,7 +1,8 @@
 package com.example.noet.domain.repository
 
-import com.example.noet.data.local.entity.Category
-import com.example.noet.domain.model.Paragraph
+import android.content.Context
+import android.graphics.Bitmap
+import com.example.noet.data.local.entity.Paragraph
 import kotlinx.coroutines.flow.Flow
 
 interface ParagraphRepository {
@@ -16,4 +17,5 @@ interface ParagraphRepository {
 
     suspend fun deleteParagraph(id: Int)
 
+    suspend fun scanAndSave(bitmap: Bitmap, context: Context): Boolean
 }
