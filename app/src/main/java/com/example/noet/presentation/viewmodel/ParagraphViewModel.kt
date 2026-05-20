@@ -28,7 +28,6 @@ class ParagraphViewModel  @Inject constructor(
     private val _detailParagraph = MutableStateFlow<Paragraph?>(null)
     val detailParagraph = _detailParagraph.asStateFlow()
 
-
     private val paragraphId: String? = savedStateHandle["paragraphId"]
 
     init {

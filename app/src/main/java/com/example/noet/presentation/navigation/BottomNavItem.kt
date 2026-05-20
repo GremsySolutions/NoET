@@ -28,7 +28,7 @@ sealed class BottomNavItem (
 
     data object Test: BottomNavItem(
         route = Screen.Test.route,
-        label = "Kiểm tra",
+        label = "Hoạt động",
         icon = R.drawable.ic_test
     )
 }

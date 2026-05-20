@@ -28,17 +28,19 @@ fun MainScreen() {
 
     val showBackButton = currentRoute == "category_detail/{categoryId}/{categoryName}" ||
             currentRoute == "camera_x_screen" ||
-            currentRoute == "paragraph_detail/{paragraphId}/{title}"
+            currentRoute == "paragraph_detail/{paragraphId}/{title}" ||
+            currentRoute == "test_picture_detail"
     val title = when (currentRoute) {
         Screen.Home.route -> "Học cùng NoET"
         Screen.Category.route -> "Danh sách danh mục"
         Screen.Paragraph.route -> "Đoạn văn"
-        Screen.Test.route -> "Bài kiểm tra"
+        Screen.Test.route -> "Các hoạt động"
         "category_detail/{categoryId}/{categoryName}" ->
             backStackEntry?.arguments?.getString("categoryName") ?: "Detail"
         "camera_x_screen" -> "Quét văn bản"
         "paragraph_detail/{paragraphId}/{title}" ->
             backStackEntry?.arguments?.getString("title") ?: "Detail"
+        "test_picture_detail" -> "Bức tranh mới"
         else -> ""
     }
 

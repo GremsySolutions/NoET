@@ -2,11 +2,14 @@ package com.example.noet.domain.repository
 
 import android.graphics.Bitmap
 import android.util.Log
+import com.example.noet.data.local.entity.Vocabulary
 import com.example.noet.domain.use_case.AiImageResponse
+import com.example.noet.domain.use_case.AiPictureResponse
 import com.example.noet.domain.use_case.AiResponse
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import com.google.gson.Gson
+import java.net.URLEncoder
 import javax.inject.Inject
 
 class AiRepository @Inject constructor(
@@ -25,10 +28,9 @@ class AiRepository @Inject constructor(
             - exampleVi: A Vietnamese example sentence
             - exampleEn: The English translation of the example
             - selectedCategory: The name of the chosen category from the list above.
-            
+           
             Return ONLY raw JSON, no markdown, no explanation.
         """.trimIndent()
-
         return try {
             val response = generativeModel.generateContent(prompt)
             val responseText = response.text
@@ -42,7 +44,6 @@ class AiRepository @Inject constructor(
                 .replace("```json", "")
                 .replace("```", "")
                 .trim()
-
             Log.d("AI_DEBUG", "Kết quả từ Gemini: $jsonString")
             gson.fromJson(jsonString, AiResponse::class.java)
 
@@ -84,7 +85,6 @@ class AiRepository @Inject constructor(
                     text(prompt)
                 }
             )
-
             val responseText = response.text ?: return null
             Log.d("AI_DEBUG_PARAGRAPH", "Raw AI full: $responseText")
 
@@ -95,18 +95,78 @@ class AiRepository @Inject constructor(
                 .substringAfter("{")
                 .substringBeforeLast("}")
                 .let { "{$it}" }
-
             Log.d("AI_DEBUG_PARAGRAPH", "JSON clean: $jsonString")
-
             val result = gson.fromJson(jsonString, AiImageResponse::class.java)
-
             Log.d("AI_DEBUG_PARAGRAPH", "Gốc: ${result.originText}")
             Log.d("AI_DEBUG_PARAGRAPH", "Dịch: ${result.translateText}")
             Log.d("AI_DEBUG_PARAGRAPH", "Category: ${result.selectedCategory}")
-
             result
         } catch (e: Exception) {
             Log.e("AI_DEBUG_PARAGRAPH", "Lỗi phân tích ảnh: ${e.message}", e)
+            null
+        }
+    }
+
+    suspend fun generatePicture(
+        vocabularies: List<Vocabulary>
+    ): AiPictureResponse? {
+
+        val selectedWords = vocabularies
+            .shuffled()
+            .take(20)
+
+        val vocabularyText = selectedWords.joinToString(", ") {
+            "${it.word} (${it.meaningVi})"
+        }
+
+        val prompt = """
+            Create a colorful educational illustration scene using these vocabulary words: $vocabularyText
+            Requirements:
+                - The scene should match the meanings and contexts of the vocabulary words
+                - The illustration style should fit the emotions, objects, and activities in the vocabulary list
+                - No text inside image
+                - Return Vietnamese title and description
+                - Return English-Vietnamese word pairs
+                - Return ONLY raw JSON
+            JSON format:
+                {
+                  "imagePrompt": "",
+                  "title": "",
+                  "description": "",
+                  "words": [
+                    {
+                      "english": "",
+                      "vietnamese": ""
+                    }
+                  ]
+                }
+            """.trimIndent()
+        return try {
+            val response = generativeModel.generateContent(prompt)
+            val responseText = response.text ?: return null
+            val jsonString = responseText
+                .replace("```json", "")
+                .replace("```", "")
+                .trim()
+            val result = gson.fromJson(
+                jsonString,
+                AiPictureResponse::class.java
+            )
+            val imageUrl =
+                "https://image.pollinations.ai/prompt/${
+                    URLEncoder.encode(
+                        result.imagePrompt,
+                        "UTF-8"
+                    )
+                }"
+            result.copy(
+                imageUrl = imageUrl
+            )
+        } catch (e: Exception) {
+            Log.e(
+                "AI_DEBUG",
+                "Generate painting error: ${e.message}"
+            )
             null
         }
     }

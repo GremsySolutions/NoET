@@ -41,6 +41,8 @@ fun HomeScreen(
 
     val query by viewModel.searchQuery.collectAsState()
 
+    val filteredVocabylary by viewModel.filteredVocabularies.collectAsState()
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {

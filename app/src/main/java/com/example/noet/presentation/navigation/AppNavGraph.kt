@@ -11,6 +11,7 @@ import com.example.noet.presentation.ui.screens.home.HomeScreen
 import com.example.noet.presentation.ui.screens.paragraph.CameraXScreen
 import com.example.noet.presentation.ui.screens.paragraph.DetailParagraphScreen
 import com.example.noet.presentation.ui.screens.paragraph.ParagraphScreen
+import com.example.noet.presentation.ui.screens.test.TestPictureScreen
 import com.example.noet.presentation.ui.screens.test.TestScreen
 
 @Composable
@@ -56,7 +57,10 @@ fun AppNavGraph(
             DetailParagraphScreen()
         }
         composable (route = Screen.Test.route){
-            TestScreen()
+            TestScreen(navController = navController)
+        }
+        composable(route = "test_picture_detail") {
+            TestPictureScreen()
         }
     }
 

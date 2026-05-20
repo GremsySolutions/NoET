@@ -1,5 +1,6 @@
 package com.example.noet.presentation.ui.screens.home
 
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,12 +20,14 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,6 +56,7 @@ import com.example.noet.ui.theme.backgroundColor2
 import com.example.noet.ui.theme.deleteColor
 import com.example.noet.ui.theme.primaryColor
 import com.example.noet.ui.theme.textColor
+import java.util.Locale
 
 @Composable
 fun CardListHome(
@@ -62,7 +67,7 @@ fun CardListHome(
     var showDialog by remember { mutableStateOf(false) }
     var itemToDelete by remember { mutableStateOf("") }
     var idToDelete by remember { mutableStateOf(-1) }
-    val vocabularies by viewModel.vocabularies.collectAsState()
+    val vocabularies by viewModel.filteredVocabularies.collectAsState()
 
     if (showDialog) {
         AlertDialog(
@@ -141,6 +146,25 @@ fun CardItemHome(
     onClickMore: () -> Unit,
     onClickFavorite: () -> Unit
 ) {
+    val context = LocalContext.current
+
+    val textToSpeech = remember {
+        TextToSpeech(context, null)
+    }
+
+    LaunchedEffect(Unit) {
+        textToSpeech.language = Locale.US
+        textToSpeech.setSpeechRate(0.85f)
+        val voice = textToSpeech.voices
+            ?.find {
+                it.name.contains("en-us", true) &&
+                        it.name.contains("female", true)
+            }
+        voice?.let {
+            textToSpeech.voice = it
+        }
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -158,13 +182,35 @@ fun CardItemHome(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(
-                text = word,
-                color = textColor,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer16V()
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = word,
+                    color = textColor,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer8H()
+                IconButton(
+                    onClick = {
+                        textToSpeech.speak(
+                            word,
+                            TextToSpeech.QUEUE_FLUSH,
+                            null,
+                            null
+                        )
+                    }
+                ) {
+
+                    Icon(
+                        painter = painterResource(R.drawable.ic_volume_up),
+                        contentDescription = null,
+                        tint = primaryColor
+                    )
+                }
+            }
+            Spacer8V()
             Row() {
                 Text(
                     text = category,
