@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.noet.data.local.dao.DaoCategory
 import com.example.noet.data.local.dao.DaoParagraph
@@ -18,7 +19,7 @@ import com.example.noet.data.local.entity.Vocabulary
         Vocabulary::class,
         Paragraph::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
@@ -29,6 +30,17 @@ abstract class AppDatabase: RoomDatabase() {
     companion object{
         private var INSTANCE: AppDatabase? = null
 
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                database.execSQL(
+                    """
+            ALTER TABLE paragraph
+            ADD COLUMN title TEXT NOT NULL DEFAULT ''
+            """.trimIndent()
+                )
+            }
+        }
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -45,11 +57,12 @@ abstract class AppDatabase: RoomDatabase() {
                             ('General Topics', $now, $now),
                             ('Food & Drinks', $now, $now),
                             ('Travel & Tourism', $now, $now),
-                            ('Family & Relationships', $now, $now),
+                            ('Family', $now, $now),
                             ('Animals & Pets', $now, $now),
                             ('Health & Fitness', $now, $now),
                             ('Sports & Games', $now, $now),
-                            ('Music & Instruments', $now, $now),
+                            ('Instruments', $now, $now),
+                            ('Music', $now, $now),
                             ('Movies & Cinema', $now, $now),
                             ('Hobbies & Interests', $now, $now),
                             ('Weather & Seasons', $now, $now),
@@ -69,26 +82,26 @@ abstract class AppDatabase: RoomDatabase() {
                             ('Religion & Spirituality', $now, $now),
                             ('Emotions & Feelings', $now, $now),
                             ('Personality Traits', $now, $now),
-                            ('Communication & Language', $now, $now),
-                            ('Transportation & Vehicles', $now, $now),
+                            ('Communication', $now, $now),
+                            ('Transportation', $now, $now),
                             ('City & Urban Life', $now, $now),
-                            ('Countryside & Rural Life', $now, $now),
+                            ('Countryside', $now, $now),
                             ('Shopping & Consumerism', $now, $now),
                             ('Money & Finance', $now, $now),
                             ('Time & Calendars', $now, $now),
                             ('Colors & Shapes', $now, $now),
-                            ('Numbers & Mathematics', $now, $now),
+                            ('Mathematics', $now, $now),
                             ('Tools & Equipment', $now, $now),
                             ('Materials & Textures', $now, $now),
                             ('Space & Astronomy', $now, $now),
                             ('Media & News', $now, $now),
-                            ('Internet & Social Media', $now, $now),
-                            ('Medicine & Pharmacy', $now, $now),
-                            ('Architecture & Building', $now, $now),
+                            ('Social Media', $now, $now),
+                            ('Medicine', $now, $now),
+                            ('Architecture', $now, $now),
                             ('Daily Routines', $now, $now),
                             ('Appliances', $now, $now),
                             ('Senses', $now, $now),
-                            ('Holidays & Celebrations', $now, $now),
+                            ('Celebrations', $now, $now),
                             ('Workplace & Office', $now, $now),
                             ('Education & Learning', $now, $now),
                             ('Emergency & Safety', $now, $now),
@@ -96,7 +109,7 @@ abstract class AppDatabase: RoomDatabase() {
                         """.trimIndent())
                     }
                 })
-                .addMigrations()
+                .addMigrations(MIGRATION_1_2)
                 .build()
                 INSTANCE = instance
                 instance

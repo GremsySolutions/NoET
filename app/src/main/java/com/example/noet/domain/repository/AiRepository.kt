@@ -1,11 +1,7 @@
 package com.example.noet.domain.repository
 
-import android.R.attr.content
-import android.R.attr.text
-import android.R.id.content
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.compose.ui.semantics.text
 import com.example.noet.domain.use_case.AiImageResponse
 import com.example.noet.domain.use_case.AiResponse
 import com.google.ai.client.generativeai.GenerativeModel
@@ -60,17 +56,27 @@ class AiRepository @Inject constructor(
     suspend fun translateParagraphWithImage(bitmap: Bitmap, categories: List<String>): AiImageResponse? {
         val categoryListString = categories.joinToString(", ")
         val prompt = """
-            Extract all English text from this image. 
-            Then translate it into Vietnamese.
-            Also, pick the most suitable category from this list: [$categoryListString].
+            Bạn là công cụ OCR và dịch thuật.
             
-            Return ONLY a JSON object:
+            Hãy đọc nội dung trong ảnh, sau đó trả về JSON hợp lệ.
+            
+            Yêu cầu:
+            - title: summary lại toàn bộ nội dung văn bản và generate một title với khoảng 2-3 từ 
+            - originText: nội dung tiếng Anh trong ảnh, viết ngắn gọn, không cần chép quá dài nguyên văn
+            - translateText: bản dịch tiếng Việt đầy đủ, tự nhiên
+            - selectedCategory: chọn đúng 1 category phù hợp nhất trong danh sách: [$categoryListString]
+            
+            Chỉ trả về JSON, không thêm giải thích.
+            
+            JSON format:
             {
-              "originText": "original english text",
-              "translateText": "vietnamese translation",
-              "selectedCategory": "category name from list"
+              "title": "",
+              "originText": "",
+              "translateText": "",
+              "selectedCategory": ""
             }
         """.trimIndent()
+
         return try {
             val response = generativeModel.generateContent(
                 content {
@@ -78,12 +84,30 @@ class AiRepository @Inject constructor(
                     text(prompt)
                 }
             )
-            val responseText = response.text?: return null
-            val jsonString = responseText.replace("```json", "").replace("```", "").trim()
-            gson.fromJson(jsonString, AiImageResponse::class.java)
-        }catch (e: Exception) {
-            Log.e("AI_DEBUG_PARAGRAPH", "Lỗi phân tích ảnh: ${e.message}")
-            return null
+
+            val responseText = response.text ?: return null
+            Log.d("AI_DEBUG_PARAGRAPH", "Raw AI full: $responseText")
+
+            val jsonString = responseText
+                .replace("```json", "")
+                .replace("```", "")
+                .trim()
+                .substringAfter("{")
+                .substringBeforeLast("}")
+                .let { "{$it}" }
+
+            Log.d("AI_DEBUG_PARAGRAPH", "JSON clean: $jsonString")
+
+            val result = gson.fromJson(jsonString, AiImageResponse::class.java)
+
+            Log.d("AI_DEBUG_PARAGRAPH", "Gốc: ${result.originText}")
+            Log.d("AI_DEBUG_PARAGRAPH", "Dịch: ${result.translateText}")
+            Log.d("AI_DEBUG_PARAGRAPH", "Category: ${result.selectedCategory}")
+
+            result
+        } catch (e: Exception) {
+            Log.e("AI_DEBUG_PARAGRAPH", "Lỗi phân tích ảnh: ${e.message}", e)
+            null
         }
     }
 }

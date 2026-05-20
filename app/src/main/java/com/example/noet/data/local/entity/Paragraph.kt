@@ -18,6 +18,7 @@ import androidx.room.PrimaryKey
 )
 data class Paragraph(
     @PrimaryKey(autoGenerate = true) val id: Int,
+    val title: String,
     val category_id: Int,
     val isFavorite: Boolean,
     val originText: String,

@@ -9,7 +9,9 @@ import com.example.noet.presentation.ui.screens.category.CategoryScreen
 import com.example.noet.presentation.ui.screens.category.DetailCategoryScreen
 import com.example.noet.presentation.ui.screens.home.HomeScreen
 import com.example.noet.presentation.ui.screens.paragraph.CameraXScreen
+import com.example.noet.presentation.ui.screens.paragraph.DetailParagraphScreen
 import com.example.noet.presentation.ui.screens.paragraph.ParagraphScreen
+import com.example.noet.presentation.ui.screens.test.TestScreen
 
 @Composable
 fun AppNavGraph(
@@ -30,7 +32,7 @@ fun AppNavGraph(
             CategoryScreen(navController = navController)
         }
 
-        composable(route = "category_detail/{categoryId}/{categoryName}") { backStackEntry ->
+        composable(route = "category_detail/{categoryId}/{categoryName}") {
             DetailCategoryScreen()
         }
 
@@ -50,8 +52,11 @@ fun AppNavGraph(
                 }
             )
         }
+        composable(route = "paragraph_detail/{paragraphId}/{title}") {
+            DetailParagraphScreen()
+        }
         composable (route = Screen.Test.route){
-
+            TestScreen()
         }
     }
 

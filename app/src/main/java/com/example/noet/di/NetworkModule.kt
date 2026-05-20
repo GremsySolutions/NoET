@@ -17,7 +17,7 @@ object NetworkModule {
     @Singleton
     fun provideGenerativeModel(): GenerativeModel{
         return GenerativeModel(
-            modelName = "gemini-2.5-flash",
+            modelName = "gemini-2.5-flash-lite",
             apiKey = BuildConfig.API_KEY
         )
     }

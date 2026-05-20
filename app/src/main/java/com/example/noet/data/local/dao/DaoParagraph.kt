@@ -1,7 +1,6 @@
 package com.example.noet.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,8 +13,8 @@ interface DaoParagraph {
     @Query("SELECT * FROM paragraph WHERE id = :id")
     suspend fun getParagraphById(id: Int): Paragraph
 
-    @Query("SELECT * FROM paragraph")
-    suspend fun getAllParagraph(): List<Paragraph>
+    @Query("SELECT * FROM paragraph ORDER BY created_at DESC")
+    fun getAllParagraph(): Flow<List<Paragraph>>
 
     @Query("SELECT * FROM paragraph WHERE category_id = :categoryId")
     fun getParagraphByCategoryId(categoryId: Int): Flow<List<Paragraph>>

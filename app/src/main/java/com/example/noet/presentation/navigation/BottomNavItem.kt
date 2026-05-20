@@ -10,25 +10,25 @@ sealed class BottomNavItem (
 ) {
     data object Home: BottomNavItem(
         route = Screen.Home.route,
-        label = "Home",
+        label = "Khám phá",
         icon = R.drawable.ic_home
     )
 
     data object Category: BottomNavItem(
         route = Screen.Category.route,
-        label = "Category",
+        label = "Danh mục",
         icon = R.drawable.ic_category
     )
 
     data object Paragraph: BottomNavItem(
         route = Screen.Paragraph.route,
-        label = "Paragraph",
+        label = "Đoạn văn",
         icon = R.drawable.ic_scan
     )
 
     data object Test: BottomNavItem(
         route = Screen.Test.route,
-        label = "Test",
+        label = "Kiểm tra",
         icon = R.drawable.ic_test
     )
 }

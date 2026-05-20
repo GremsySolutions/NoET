@@ -1,10 +1,7 @@
 package com.example.noet.data.local.entity
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
-import java.sql.Timestamp
 
 @Entity(tableName = "category")
 data class Category(

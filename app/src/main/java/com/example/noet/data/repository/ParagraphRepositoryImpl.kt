@@ -17,7 +17,7 @@ class ParagraphRepositoryImpl @Inject constructor(
     private val categoryDao: DaoCategory,
     private val aiRepository: AiRepository
 ): ParagraphRepository {
-    override suspend fun getAllParagraph(): List<Paragraph> {
+    override suspend fun getAllParagraph(): Flow<List<Paragraph>> {
         return paragraphDao.getAllParagraph()
     }
 
@@ -66,6 +66,7 @@ class ParagraphRepositoryImpl @Inject constructor(
 
         val newParagraph = Paragraph(
             id = 0,
+            title = result.title,
             category_id = finalCategoryId,
             isFavorite = false,
             originText = result.originText,

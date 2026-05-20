@@ -69,4 +69,8 @@ class VocabularyRepositoryImpl @Inject constructor(
     override suspend fun getAllVocabularyWithCategory(): Flow<List<VocabularyWithCategory>> {
         return vocabularyDao.getAllVocabularyWithCategory()
     }
+
+    override fun searchVocabulary(query: String): Flow<List<Vocabulary>> {
+        return vocabularyDao.searchVocabulary(query)
+    }
 }

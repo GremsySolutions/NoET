@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ParagraphRepository {
 
-    suspend fun getAllParagraph(): List<Paragraph>
+    suspend fun getAllParagraph(): Flow<List<Paragraph>>
 
     suspend fun getParagraphById(id: Int): Paragraph
 

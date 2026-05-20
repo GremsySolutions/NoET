@@ -1,6 +1,5 @@
 package com.example.noet.domain.repository
 
-import com.example.noet.data.local.entity.CategoryWithVocabularies
 import com.example.noet.data.local.entity.Vocabulary
 import com.example.noet.data.local.entity.VocabularyWithCategory
 import kotlinx.coroutines.flow.Flow
@@ -18,4 +17,5 @@ interface VocabularyRepository {
 
     suspend fun getAllVocabularyWithCategory(): Flow<List<VocabularyWithCategory>>
 
+    fun searchVocabulary(query: String): Flow<List<Vocabulary>>
 }

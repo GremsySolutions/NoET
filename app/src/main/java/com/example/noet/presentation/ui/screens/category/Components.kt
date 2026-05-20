@@ -16,8 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material3.DatePickerDefaults.dateFormatter
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -33,9 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.util.fastCbrt
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer8H
@@ -43,7 +39,6 @@ import com.example.noet.presentation.viewmodel.CategoryViewModel
 import com.example.noet.ui.theme.primaryColor
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.text.format
 
 @Composable
 fun CardListCategory(
@@ -145,7 +140,6 @@ fun DetailItemCategory(
     meaningVi: String,
     exampleVi: String,
     exampleEn: String,
-    onClickMore: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row (
@@ -200,15 +194,6 @@ fun DetailItemCategory(
                 fontSize = 14.sp,
                 color = Color.Gray,
                 modifier = Modifier.padding(top = 4.dp)
-            )
-        }
-        IconButton(
-            onClick = onClickMore
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_more_vert),
-                contentDescription = "",
-                tint = Color.Gray
             )
         }
     }

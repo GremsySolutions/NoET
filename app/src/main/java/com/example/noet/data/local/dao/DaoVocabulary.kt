@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.noet.data.local.entity.CategoryWithVocabularies
 import com.example.noet.data.local.entity.Vocabulary
 import com.example.noet.data.local.entity.VocabularyWithCategory
 import kotlinx.coroutines.flow.Flow
@@ -31,5 +30,13 @@ interface DaoVocabulary {
     @Transaction
     @Query("SELECT * FROM vocabulary ORDER BY created_at DESC")
     fun getAllVocabularyWithCategory(): Flow<List<VocabularyWithCategory>>
+
+    @Query("""
+    SELECT * FROM vocabulary
+        WHERE word LIKE '%' || :query || '%'
+        OR meaningVi LIKE '%' || :query || '%'
+        ORDER BY created_at DESC
+    """)
+    fun searchVocabulary(query: String): Flow<List<Vocabulary>>
 
 }

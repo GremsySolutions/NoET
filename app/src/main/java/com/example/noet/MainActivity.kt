@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import com.example.noet.data.local.database.AppDatabase
-import com.example.noet.presentation.ui.screens.home.HomeScreen
 import com.example.noet.ui.theme.NoETTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers

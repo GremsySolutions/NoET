@@ -1,6 +1,7 @@
 package com.example.noet.presentation.ui.screens.paragraph
 
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -70,6 +72,26 @@ fun ParagraphScreen(
                 ImageDecoder.decodeBitmap(source)
             }
             viewModel.scanAndSave(bitmap, context)
+        }
+    }
+
+    val capturedUri by navController.currentBackStackEntry
+        ?.savedStateHandle
+        ?.getStateFlow<String?>("captured_uri", null)
+        ?.collectAsState()
+        ?: remember { mutableStateOf(null) }
+
+    LaunchedEffect(capturedUri) {
+        capturedUri?.let { uriString ->
+            val uri = Uri.parse(uriString)
+            val bitmap = if (Build.VERSION.SDK_INT < 28) {
+                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+            }else{
+                val source = ImageDecoder.createSource(context.contentResolver, uri)
+                ImageDecoder.decodeBitmap(source)
+            }
+            viewModel.scanAndSave(bitmap, context)
+            navController.currentBackStackEntry?.savedStateHandle?.set("captured_uri", null)
         }
     }
 
@@ -121,7 +143,10 @@ fun ParagraphScreen(
         }
         Spacer16V()
         CardListParagraph(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            onParagraphClick = { paragraphId, title ->
+                navController.navigate(route = "paragraph_detail/$paragraphId/$title")
+            }
         )
     }
 

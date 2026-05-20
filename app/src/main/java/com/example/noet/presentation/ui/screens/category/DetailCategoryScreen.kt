@@ -31,12 +31,8 @@ fun DetailCategoryScreen(
                     word = item.word,
                     meaningVi = item.meaningVi,
                     exampleVi = item.exampleVi,
-                    exampleEn = item.exampleEn,
-                    onClickMore = {
-
-                    }
+                    exampleEn = item.exampleEn
                 )
-
             }
         }
 

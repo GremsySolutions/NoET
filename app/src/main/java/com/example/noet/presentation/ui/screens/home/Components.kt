@@ -1,6 +1,5 @@
 package com.example.noet.presentation.ui.screens.home
 
-import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -105,7 +104,6 @@ fun CardListHome(
                     Text("Xoá ngay", color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
-
         )
     }
     LazyColumn(
