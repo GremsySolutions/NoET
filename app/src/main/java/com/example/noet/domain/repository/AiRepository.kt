@@ -82,8 +82,8 @@ class AiRepository @Inject constructor(
             val jsonString = responseText.replace("```json", "").replace("```", "").trim()
             gson.fromJson(jsonString, AiImageResponse::class.java)
         }catch (e: Exception) {
-            Log.e("AI_DEBUG", "Lỗi phân tích ảnh: ${e.message}")
-            null
+            Log.e("AI_DEBUG_PARAGRAPH", "Lỗi phân tích ảnh: ${e.message}")
+            return null
         }
     }
 }
