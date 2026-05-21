@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,8 +46,8 @@ fun CardListCategory(
     modifier: Modifier = Modifier
 ) {
     val categories by viewModel.categories.collectAsState()
-
     val dateFormatter = SimpleDateFormat("dd/MM/yyyy")
+
     LazyColumn {
         items(categories) { item ->
             val title = item.category.name
@@ -139,8 +138,7 @@ fun DetailItemCategory(
     word: String,
     meaningVi: String,
     exampleVi: String,
-    exampleEn: String,
-    modifier: Modifier = Modifier
+    exampleEn: String
 ) {
     Row (
         modifier = Modifier

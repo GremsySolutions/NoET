@@ -23,7 +23,6 @@ class CategoryViewModel @Inject constructor(
 
     private val _categoryDetail = MutableStateFlow<CategoryWithVocabularies?>(null)
     val categoryDetail: StateFlow<CategoryWithVocabularies?> = _categoryDetail.asStateFlow()
-
     private val categoryId: String? = savedStateHandle["categoryId"]
 
     init {

@@ -1,5 +1,7 @@
 package com.example.noet.presentation.ui.screens.test
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,8 @@ import coil.compose.AsyncImage
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.TestViewModel
+import com.example.noet.ui.theme.primaryColor
+import org.w3c.dom.Text
 
 @Composable
 fun TestPictureScreen(
@@ -32,11 +36,16 @@ fun TestPictureScreen(
         item {
             paintingResult?.let { result ->
 
-                Text(
-                    text = result.title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = result.title,
+                        fontWeight = FontWeight.Bold,
+                        color = primaryColor,
+                        fontSize = 18.sp
+                    )
+                }
 
                 Spacer16V()
 
@@ -49,9 +58,24 @@ fun TestPictureScreen(
                 )
 
                 Spacer16V()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "* Danh sách từ vựng",
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "${result.words.size} từ được tìm thấy",
+                        color = primaryColor
+                    )
+                }
+
+                Spacer8V()
 
                 result.words.forEach { item ->
-                    VocabularyPaintingItem(item.english, item.vietnamese)
+                    VocabularyPaintingItem(item.phonetic,item.english, item.vietnamese)
                     Spacer8V()
                 }
             }

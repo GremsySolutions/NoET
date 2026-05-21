@@ -47,10 +47,10 @@ class VocabularyRepositoryImpl @Inject constructor(
             it.name.equals(result.selectedCategory, ignoreCase = true)
         }
         val finalCategoryId = selectedCategory?.id ?: (allCategories.firstOrNull()?.id ?: 1)
-
         val newVocab = Vocabulary(
             id = 0,
             word = word,
+            phonetic = result.phonetic,
             category_id = finalCategoryId,
             isFavorite = false,
             meaningVi = result.meaningVi,

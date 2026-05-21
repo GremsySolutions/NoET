@@ -16,7 +16,6 @@ import com.example.noet.presentation.viewmodel.CategoryViewModel
 @Composable
 fun DetailCategoryScreen(
     viewModel: CategoryViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
 ) {
     val vocabularies by viewModel.categoryDetail.collectAsState()
 
@@ -35,6 +34,5 @@ fun DetailCategoryScreen(
                 )
             }
         }
-
     }
 }

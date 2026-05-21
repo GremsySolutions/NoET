@@ -118,6 +118,7 @@ fun CardListHome(
         items(vocabularies) { word ->
             CardItemHome(
                 word = word.vocabulary.word,
+                phonetic = word.vocabulary.phonetic,
                 category = word.category.name,
                 meaningVi = word.vocabulary.meaningVi,
                 exampleVi = word.vocabulary.exampleVi,
@@ -138,6 +139,7 @@ fun CardListHome(
 @Composable
 fun CardItemHome(
     word: String,
+    phonetic: String,
     category: String,
     meaningVi: String,
     exampleVi: String,
@@ -182,14 +184,19 @@ fun CardItemHome(
         Column(
             modifier = Modifier.weight(1f)
         ) {
+            Text(
+                text = word,
+                color = textColor,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = word,
-                    color = textColor,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    text = phonetic,
+                    color = Color.Gray,
+                    fontSize = 16.sp,
                 )
                 Spacer8H()
                 IconButton(
@@ -368,7 +375,7 @@ fun AddVocabularyDialog(
                         color = primaryColor
                     )
                     Text(
-                        text = "Gemini đang dịch và tạo ví dụ...",
+                        text = "Đang dịch tự động bởi AI",
                         fontSize = 12.sp,
                         color = Color.Gray,
                         modifier = Modifier.padding(top = 4.dp)
@@ -396,6 +403,7 @@ fun AddVocabularyDialog(
                 )
             }
         },
+
         dismissButton = {
             TextButton(
                 onClick = {

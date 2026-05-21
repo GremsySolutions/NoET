@@ -19,6 +19,7 @@ import androidx.room.PrimaryKey
 data class Vocabulary(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val word: String,
+    val phonetic: String,
     val category_id: Int,
     val isFavorite: Boolean,
     val meaningVi: String,

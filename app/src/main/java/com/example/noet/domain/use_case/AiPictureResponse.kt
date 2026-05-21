@@ -7,7 +7,9 @@ data class AiPictureResponse(
     val description: String,
     val words: List<PaintingWord>
 )
+
 data class PaintingWord(
+    val phonetic: String,
     val english: String,
     val vietnamese: String
 )

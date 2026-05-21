@@ -3,7 +3,6 @@ package com.example.noet.data.local.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-
 data class CategoryWithVocabularies(
     @Embedded val category: Category,
     @Relation(
@@ -12,16 +11,6 @@ data class CategoryWithVocabularies(
     )
     val vocabularies: List<Vocabulary>
 )
-
-data class CategoryWithParagraphs(
-    @Embedded val category: Category,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "category_id"
-    )
-    val paragraphs: List<Paragraph>
-)
-
 
 data class VocabularyWithCategory(
     @Embedded val vocabulary: Vocabulary,

@@ -1,11 +1,13 @@
 package com.example.noet.presentation.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -29,6 +31,7 @@ fun AppTopBar(
     title: String,
     showBackButton: Boolean = true,
     onClickBack: () -> Unit,
+    onClickSetting: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
@@ -50,6 +53,18 @@ fun AppTopBar(
                     )
                 }
             }
+        },
+        actions = {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "",
+                tint = primaryColor,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clickable{
+                        onClickSetting()
+                    }
+            )
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = backgroundColor,

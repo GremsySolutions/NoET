@@ -5,7 +5,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.noet.presentation.navigation.AppNavGraph
@@ -29,18 +28,28 @@ fun MainScreen() {
     val showBackButton = currentRoute == "category_detail/{categoryId}/{categoryName}" ||
             currentRoute == "camera_x_screen" ||
             currentRoute == "paragraph_detail/{paragraphId}/{title}" ||
-            currentRoute == "test_picture_detail"
+            currentRoute == "test_picture_detail" ||
+            currentRoute == "test_music_detail" ||
+            currentRoute == "settings"
+
     val title = when (currentRoute) {
         Screen.Home.route -> "Học cùng NoET"
         Screen.Category.route -> "Danh sách danh mục"
         Screen.Paragraph.route -> "Đoạn văn"
         Screen.Test.route -> "Các hoạt động"
+
         "category_detail/{categoryId}/{categoryName}" ->
             backStackEntry?.arguments?.getString("categoryName") ?: "Detail"
         "camera_x_screen" -> "Quét văn bản"
+
         "paragraph_detail/{paragraphId}/{title}" ->
             backStackEntry?.arguments?.getString("title") ?: "Detail"
+
         "test_picture_detail" -> "Bức tranh mới"
+
+        "test_music_detail" -> "Bài hát của bạn"
+
+        "settings" -> "Cài đặt"
         else -> ""
     }
 
@@ -51,6 +60,9 @@ fun MainScreen() {
                 showBackButton = showBackButton,
                 onClickBack = {
                     navController.popBackStack()
+                },
+                onClickSetting = {
+                    navController.navigate("settings")
                 }
             )
         },

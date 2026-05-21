@@ -22,8 +22,6 @@ class VocabularyViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _vocabularies = MutableStateFlow<List<VocabularyWithCategory>>(emptyList())
-    val vocabularies: StateFlow<List<VocabularyWithCategory>> = _vocabularies.asStateFlow()
-
     private val _searchQuery = MutableStateFlow("")
     val searchQuery = _searchQuery.asStateFlow()
 

@@ -41,7 +41,6 @@ class ParagraphRepositoryImpl @Inject constructor(
         bitmap: Bitmap,
         context: Context
     ): Boolean {
-
         Log.d("AI_DEBUG_PARAGRAPH", "Bắt đầu gọi AI cho từ:")
         val fileName = "para_${System.currentTimeMillis()}.jpg"
         val file = File(context.filesDir, fileName)
@@ -58,12 +57,10 @@ class ParagraphRepositoryImpl @Inject constructor(
             return false
         }
         Log.d("AI_DEBUG_PARAGRAPH", "AI trả về kết quả: ${result.originText}")
-
         val selectedCategory = allCategories.find {
             it.name.equals(result.selectedCategory, ignoreCase = true)
         }
         val finalCategoryId = selectedCategory?.id ?: (allCategories.firstOrNull()?.id ?: 1)
-
         val newParagraph = Paragraph(
             id = 0,
             title = result.title,

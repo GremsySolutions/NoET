@@ -1,5 +1,6 @@
 package com.example.noet.presentation.navigation
 
+import android.net.http.SslCertificate.saveState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -35,14 +36,8 @@ fun BottomNavigation(
             NavigationBarItem(
                 selected = currentRoute == item.route,
                 onClick = {
-                    if(currentRoute != item.route) {
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                    if (currentRoute != item.route) {
+                        navController.navigateSingleTop(item.route)
                     }
                 },
                 icon = {

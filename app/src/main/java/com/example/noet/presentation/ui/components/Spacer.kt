@@ -22,15 +22,16 @@ fun Space32V() {
     Spacer(modifier = Modifier.height(32.dp))
 }
 
-
 @Composable
 fun Spacer8H() {
     Spacer(modifier = Modifier.width(8.dp))
 }
+
 @Composable
 fun Spacer12H() {
     Spacer(modifier = Modifier.width(12.dp))
 }
+
 @Composable
 fun Spacer16H() {
     Spacer(modifier = Modifier.width(16.dp))

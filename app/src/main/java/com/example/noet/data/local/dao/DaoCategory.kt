@@ -16,6 +16,7 @@ interface DaoCategory {
     @Transaction
     @Query("SELECT * FROM category WHERE id = :id")
     fun getCategoryIdWithVocabularies(id: Int): Flow<CategoryWithVocabularies>
+
     @Query("SELECT * FROM category")
     suspend fun getAllCategory(): List<Category>
 
