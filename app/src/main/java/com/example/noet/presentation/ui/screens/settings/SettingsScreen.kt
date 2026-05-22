@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -57,8 +58,7 @@ import com.example.noet.ui.theme.primaryColor
 @Composable
 fun SettingsScreen(
     navController: NavController,
-    viewModel: SettingViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: SettingViewModel = hiltViewModel()
 ) {
     val loading by viewModel.loading.collectAsState()
     val navigationHome by viewModel.navigationRoute.collectAsState()
@@ -84,14 +84,14 @@ fun SettingsScreen(
 
             CardItemSettings(
                 icon = painterResource(R.drawable.gemini),
-                title = "Google Gemini Key",
-                description = "Công cụ chính cho OCR và tóm tắt",
+                title = stringResource(R.string.title_gemini_key),
+                description = stringResource(R.string.gemini_key_description),
                 modelName = "GEMINI",
                 textValue = geminiKey,
                 onValueChange = {
                     geminiKey = it
                 },
-                note = "Lấy key tại Google AI Studio để kích hoạt tính năng ứng dụng",
+                note = stringResource(R.string.gemini_key_note),
                 url = "https://aistudio.google.com/app/apikey"
             )
 
@@ -99,14 +99,14 @@ fun SettingsScreen(
 
             CardItemSettings(
                 icon = painterResource(R.drawable.openai),
-                title = "Open AI Key",
-                description = "Phân tích năng cao và dịch thuật",
+                title = stringResource(R.string.title_openai_key),
+                description = stringResource(R.string.openai_key_description),
                 modelName = "OPEN AI",
                 textValue = openAiKey,
                 onValueChange = {
                     openAiKey = it
                 },
-                note = "Lấy key tại Open AI Dashboard để kích hoạt tính năng năng cao",
+                note = stringResource(R.string.openai_key_note),
                 url = "https://platform.openai.com/api-keys"
             )
             Row(
@@ -133,7 +133,7 @@ fun SettingsScreen(
                     )
                 ) {
                     Text(
-                        text = "Cập nhật Key",
+                        text = stringResource(R.string.cap_nhat_key),
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
@@ -158,7 +158,7 @@ fun SettingsScreen(
                 )
                 Spacer16V()
                 Text(
-                    text = "Đang lưu lại",
+                    text = stringResource(R.string.dang_luu_lai),
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
@@ -212,7 +212,6 @@ fun CardItemSettings(
                         contentDescription = null
                     )
                 }
-
                 Spacer8H()
                 Column {
 
@@ -231,7 +230,6 @@ fun CardItemSettings(
                     )
                 }
             }
-
             IconButton(
                 onClick = {}
             ) {
@@ -244,7 +242,6 @@ fun CardItemSettings(
         }
 
         Spacer16V()
-
         Text(
             text = "NHẬP ${modelName.uppercase()} API KEY",
             color = primaryColor,
@@ -260,7 +257,7 @@ fun CardItemSettings(
             onValueChange = onValueChange,
             placeholder = {
                 Text(
-                    text = "Nhập key của bạn"
+                    text = stringResource(R.string.nhap_key_cua_ban)
                 )
             },
             modifier = Modifier.fillMaxWidth(),
@@ -301,7 +298,7 @@ fun CardItemSettings(
             horizontalArrangement = Arrangement.End
         ) {
             Text(
-                text = "Truy cập tại đây",
+                text = stringResource(R.string.truy_cap_tai_day),
                 color = primaryColor,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier

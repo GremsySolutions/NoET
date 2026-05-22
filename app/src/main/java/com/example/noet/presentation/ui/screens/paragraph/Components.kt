@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.noet.R
 import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8V
@@ -69,21 +70,21 @@ fun CardListParagraph(
             onDismissRequest = {
                 showDialog = false
             },
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(12.dp),
             containerColor = backgroundColor2,
             title = {
                 Text(
-                    text = "Xác nhận xoá",
+                    text = stringResource(R.string.xac_nhan_xoa),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
             },
             text = {
                 Text(
-                    text = "Bạn có chắc chắn muốn xoá đoạn văn này không?",
+                    text = stringResource(R.string.xac_nhan_xoa_chac_chan),
                     fontSize = 16.sp
                 )
             },
@@ -98,7 +99,7 @@ fun CardListParagraph(
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Xoá ngay", color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.xoa_ngay), color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -225,23 +226,18 @@ fun CardItemParagraph(
     }
 }
 
-
 @Composable
 fun DetailParagraphItem(
     originalText: String,
     translateText: String,
-    imagePath: String,
-    modifier: Modifier = Modifier
+    imagePath: String
 ) {
     val context = LocalContext.current
     val imageFile = remember(imagePath) { File(context.filesDir, imagePath) }
 
     Column(
-
     ) {
-
         Box(
-
         ) {
             AsyncImage(
                 model = imageFile,
@@ -255,7 +251,7 @@ fun DetailParagraphItem(
 
         Spacer16V()
         Text(
-            text = "Đoạn văn bằng Tiếng Anh được tóm tắt",
+            text = stringResource(R.string.doan_van_tieng_anh),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = primaryColor
@@ -267,7 +263,7 @@ fun DetailParagraphItem(
         )
         Spacer16V()
         Text(
-            text = "Đoạn dịch Tiếng Việt",
+            text = stringResource(R.string.doan_van_tieng_viet),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = primaryColor

@@ -59,7 +59,7 @@ fun CardListCategory(
                 count = count,
                 date = dateString,
                 onClick = { onCategoryClick(item.category.id, title) },
-                modifier = Modifier.padding(vertical = 8.dp)
+                modifier = modifier.padding(vertical = 8.dp)
             )
         }
     }

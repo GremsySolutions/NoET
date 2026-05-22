@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -106,13 +107,13 @@ fun CardListHome(
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Xoá ngay", color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.xoa_ngay), color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
         )
     }
     LazyColumn(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
     ){
         items(vocabularies) { word ->
@@ -325,7 +326,7 @@ fun AddVocabularyDialog(
         containerColor = backgroundColor2,
         title = {
             Text(
-                text = "Thêm từ vựng mới",
+                text = stringResource(R.string.them_tu_moi),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = primaryColor
@@ -343,7 +344,7 @@ fun AddVocabularyDialog(
                     },
                     placeholder = {
                         Text(
-                            text = "Nhập từ vựng mới"
+                            text = stringResource(R.string.nhap_tu_vung_moi)
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -375,7 +376,7 @@ fun AddVocabularyDialog(
                         color = primaryColor
                     )
                     Text(
-                        text = "Đang dịch tự động bởi AI",
+                        text = stringResource(R.string.dang_dich_tu_dong),
                         fontSize = 12.sp,
                         color = Color.Gray,
                         modifier = Modifier.padding(top = 4.dp)
@@ -399,7 +400,7 @@ fun AddVocabularyDialog(
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    if (loading) "Đang xử lý... " else "Dịch từ", color = Color.White
+                    if (loading) stringResource(R.string.dang_xu_ly) else stringResource(R.string.dich_tu), color = Color.White
                 )
             }
         },
@@ -412,7 +413,7 @@ fun AddVocabularyDialog(
                 },
                 enabled = !loading
             ) {
-                Text("Huỷ", color = Color.Gray)
+                Text(stringResource(R.string.huy), color = Color.Gray)
             }
         }
     )

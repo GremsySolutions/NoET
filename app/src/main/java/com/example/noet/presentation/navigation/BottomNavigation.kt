@@ -19,7 +19,6 @@ import com.example.noet.ui.theme.primaryColor
 fun BottomNavigation(
     navController: NavHostController
 ) {
-
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Category,

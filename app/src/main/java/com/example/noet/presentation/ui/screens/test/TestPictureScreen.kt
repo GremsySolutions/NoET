@@ -11,21 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.TestViewModel
 import com.example.noet.ui.theme.primaryColor
-import org.w3c.dom.Text
 
 @Composable
 fun TestPictureScreen(
-    viewModel: TestViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: TestViewModel = hiltViewModel()
 ) {
     val paintingResult by viewModel.paintingResult.collectAsState()
     LazyColumn(
@@ -35,7 +35,6 @@ fun TestPictureScreen(
     ) {
         item {
             paintingResult?.let { result ->
-
                 Row(
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -46,9 +45,7 @@ fun TestPictureScreen(
                         fontSize = 18.sp
                     )
                 }
-
                 Spacer16V()
-
                 AsyncImage(
                     model = result.imageUrl,
                     contentDescription = null,
@@ -56,24 +53,21 @@ fun TestPictureScreen(
                         .fillMaxWidth()
                         .height(260.dp)
                 )
-
                 Spacer16V()
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "* Danh sách từ vựng",
+                        text = stringResource(R.string.danh_sach_tu_vung),
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "${result.words.size} từ được tìm thấy",
+                        text = stringResource(R.string.tu_duoc_tim_thay, result.words.size),
                         color = primaryColor
                     )
                 }
-
                 Spacer8V()
-
                 result.words.forEach { item ->
                     VocabularyPaintingItem(item.phonetic,item.english, item.vietnamese)
                     Spacer8V()

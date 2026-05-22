@@ -17,12 +17,11 @@ import com.example.noet.presentation.viewmodel.ParagraphViewModel
 
 @Composable
 fun DetailParagraphScreen(
-    viewModel: ParagraphViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: ParagraphViewModel = hiltViewModel()
 ) {
     val paragraph by viewModel.detailParagraph.collectAsState()
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
             .padding(16.dp)

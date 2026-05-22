@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,8 +55,7 @@ import com.example.noet.ui.theme.primaryColor
 @Composable
 fun ParagraphScreen(
     navController: NavController,
-    viewModel: ParagraphViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    viewModel: ParagraphViewModel = hiltViewModel()
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -136,7 +136,7 @@ fun ParagraphScreen(
             }
             Spacer12H()
             Text(
-                text = "CHỌN ẢNH ĐỂ SCAN",
+                text = stringResource(R.string.chon_anh_de_scan),
                 fontSize = 12.sp,
                 color = primaryColor
             )
@@ -169,7 +169,7 @@ fun ParagraphScreen(
                 )
                 Spacer16V()
                 Text(
-                    text = "Gemini đang phân tích ảnh...",
+                    text = stringResource(R.string.dang_phan_tich_anh),
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
@@ -190,7 +190,7 @@ fun ParagraphScreen(
                     .padding(bottom = 32.dp)
             ) {
                 Text(
-                    text = "Chọn nguồn ảnh",
+                    text = stringResource(R.string.chon_nguon_anh),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = primaryColor
@@ -212,7 +212,7 @@ fun ParagraphScreen(
                         tint = primaryColor
                     )
                     Spacer8H()
-                    Text("Máy ảnh")
+                    Text(stringResource(R.string.may_anh))
                 }
                 Row(
                     modifier = Modifier
@@ -230,7 +230,7 @@ fun ParagraphScreen(
                         tint = primaryColor
                     )
                     Spacer8H()
-                    Text("Chọn ảnh từ thư viện")
+                    Text(stringResource(R.string.thu_vien_anh))
                 }
             }
         }

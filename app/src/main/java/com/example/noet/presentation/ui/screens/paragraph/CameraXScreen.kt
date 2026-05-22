@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -58,10 +59,10 @@ fun CameraXScreen(
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Ứng dụng cần quyền Camera để tiếp tục")
+                Text(text = stringResource(R.string.yeu_cau_quyen))
                 Spacer(modifier = Modifier.size(16.dp))
                 Button(onClick = { cameraPermissionState.launchPermissionRequest() }) {
-                    Text("Cấp quyền Camera")
+                    Text(stringResource(R.string.cap_quyen_camera))
                 }
             }
         }
