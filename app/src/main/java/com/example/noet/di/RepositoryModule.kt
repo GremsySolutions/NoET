@@ -4,15 +4,19 @@ import com.example.noet.data.local.dao.DaoCategory
 import com.example.noet.data.local.dao.DaoParagraph
 import com.example.noet.data.local.dao.DaoVocabulary
 import com.example.noet.data.local.database.AppDatabase
+import com.example.noet.data.remote.api.OpenRouterApi
 import com.example.noet.data.repository.CategoryRepositoryImpl
 import com.example.noet.data.repository.ParagraphRepositoryImpl
 import com.example.noet.data.repository.TestPictureRepositoryImpl
 import com.example.noet.data.repository.VocabularyRepositoryImpl
+import com.example.noet.data.repository.AiRepositoryImpl
 import com.example.noet.domain.repository.AiRepository
 import com.example.noet.domain.repository.CategoryRepository
 import com.example.noet.domain.repository.ParagraphRepository
 import com.example.noet.domain.repository.TestPictureRepository
 import com.example.noet.domain.repository.VocabularyRepository
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,5 +60,15 @@ object RepositoryModule {
        aiRepository: AiRepository
     ): TestPictureRepository {
         return TestPictureRepositoryImpl(vocabularyDao, aiRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAiRepository(
+        generativeModel: GenerativeModel,
+        openRouterApi: OpenRouterApi,
+        gson: Gson
+    ): AiRepository {
+        return AiRepositoryImpl(generativeModel, openRouterApi, gson)
     }
 }
