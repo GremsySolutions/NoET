@@ -1,6 +1,7 @@
 package com.example.noet.data.remote.api
 
 import android.content.Context
+import com.example.noet.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -21,10 +22,8 @@ class ApiKeyManager @Inject constructor(
     }
 
     fun getGeminiKey(): String {
-        return prefs.getString(
-            "gemini_key",
-            ""
-        ) ?: ""
+        val savedKey = prefs.getString("gemini_key", "")
+        return if (savedKey.isNullOrEmpty()) BuildConfig.API_KEY1 else savedKey
     }
 
     fun saveOpenRouterKey(key: String) {
@@ -34,9 +33,7 @@ class ApiKeyManager @Inject constructor(
     }
 
     fun getOpenRouterKey(): String {
-        return prefs.getString(
-            "openrouter_key",
-            ""
-        ) ?: ""
+        val savedKey = prefs.getString("openrouter_key", "")
+        return if (savedKey.isNullOrEmpty()) BuildConfig.API_KEY2 else savedKey
     }
 }
