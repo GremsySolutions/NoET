@@ -24,7 +24,8 @@ object NetworkModule {
     ): GenerativeModel{
         return GenerativeModel(
             modelName = "gemini-2.5-flash-lite",
-            apiKey = apiKeyManager.getGeminiKey()
+//            apiKey = apiKeyManager.getGeminiKey()
+            apiKey = BuildConfig.API_KEY1
         )
     }
 

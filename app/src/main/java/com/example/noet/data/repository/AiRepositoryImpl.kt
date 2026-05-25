@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import com.example.noet.data.local.entity.Vocabulary
 import com.example.noet.data.remote.AiConfig
+import com.example.noet.data.remote.api.ApiKeyManager
 import com.example.noet.data.remote.api.OpenRouterApi
 import com.example.noet.domain.repository.AiRepository
 import com.example.noet.domain.use_case.AiImageResponse
