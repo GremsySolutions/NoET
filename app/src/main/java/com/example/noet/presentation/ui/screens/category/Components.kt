@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,7 +36,6 @@ import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.viewmodel.CategoryViewModel
-import com.example.noet.ui.theme.primaryColor
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -92,13 +92,13 @@ fun CardItemCategory(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(primaryColor.copy(alpha = 0.1f)),
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_paragraph),
                 contentDescription = null,
-                tint = primaryColor,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(30.dp)
             )
         }
@@ -108,26 +108,25 @@ fun CardItemCategory(
         ) {
             Text(
                 text = title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = "$count từ vựng",
-                fontSize = 14.sp,
-                color = Color.Gray
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
                 text = "Cập nhật: $date",
-                fontSize = 14.sp,
-                color = Color.LightGray
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
         }
 
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = null,
-            tint = Color.Gray,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(24.dp)
         )
     }
@@ -150,7 +149,7 @@ fun DetailItemCategory(
                 clip = false
             )
             .clip(RoundedCornerShape(12.dp))
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -162,35 +161,33 @@ fun DetailItemCategory(
             ){
                 Text(
                     text = word,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = primaryColor
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = "|",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.outline
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = meaningVi,
-                    fontSize = 16.sp,
-                    color = Color.Black
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
             Text(
                 text = "Ví dụ: $exampleVi",
-                fontSize = 14.sp,
-                color = Color.Gray,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp)
             )
             Spacer8H()
             Text(
                 text = "Ex: $exampleEn",
-                fontSize = 14.sp,
-                color = Color.Gray,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }

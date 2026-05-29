@@ -22,6 +22,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -52,11 +53,6 @@ import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.VocabularyViewModel
-import com.example.noet.ui.theme.backgroundColor
-import com.example.noet.ui.theme.backgroundColor2
-import com.example.noet.ui.theme.deleteColor
-import com.example.noet.ui.theme.primaryColor
-import com.example.noet.ui.theme.textColor
 import java.util.Locale
 
 @Composable
@@ -82,7 +78,7 @@ fun CardListHome(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(12.dp),
-            containerColor = backgroundColor2,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             title = {
                 Text(
                     text = "Xác nhận xoá",
@@ -103,7 +99,7 @@ fun CardListHome(
                         viewModel.deleteVocabulary(idToDelete)
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = primaryColor
+                        containerColor = MaterialTheme.colorScheme.primary
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
@@ -187,7 +183,7 @@ fun CardItemHome(
         ) {
             Text(
                 text = word,
-                color = textColor,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -196,7 +192,7 @@ fun CardItemHome(
             ) {
                 Text(
                     text = phonetic,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 16.sp,
                 )
                 Spacer8H()
@@ -214,7 +210,7 @@ fun CardItemHome(
                     Icon(
                         painter = painterResource(R.drawable.ic_volume_up),
                         contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -222,7 +218,7 @@ fun CardItemHome(
             Row() {
                 Text(
                     text = category,
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 16.sp,
                 )
                 Spacer(modifier = Modifier.width(6.dp))
@@ -230,12 +226,12 @@ fun CardItemHome(
                     text = "|",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = meaningVi,
-                    color = textColor,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp,
                 )
             }
@@ -258,7 +254,7 @@ fun CardItemHome(
                 Icon(
                     painter = painterResource(R.drawable.ic_heart_empty),
                     contentDescription = "Favorite",
-                    tint = primaryColor,
+                    tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier
                         .clickable{
                             onClickFavorite()
@@ -268,7 +264,7 @@ fun CardItemHome(
                 Icon(
                     painter = painterResource(R.drawable.ic_more_vert),
                     contentDescription = "More",
-                    tint = primaryColor,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable{
                             onClickMore()
@@ -278,7 +274,7 @@ fun CardItemHome(
             Icon(
                 painter = painterResource(R.drawable.ic_delete),
                 contentDescription = "Delete",
-                tint = deleteColor,
+                tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.clickable {
                     onClickDelete()
                 }
@@ -323,13 +319,13 @@ fun AddVocabularyDialog(
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
         shape = RoundedCornerShape(12.dp),
-        containerColor = backgroundColor2,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         title = {
             Text(
                 text = stringResource(R.string.them_tu_moi),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = primaryColor
+                color = MaterialTheme.colorScheme.primary
             )
         },
         text = {
@@ -352,11 +348,13 @@ fun AddVocabularyDialog(
                     enabled = !loading,
                     shape = RoundedCornerShape(12.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.White,
-                        unfocusedContainerColor = Color.White,
-                        focusedBorderColor = backgroundColor,
-                        unfocusedBorderColor = backgroundColor2,
-                        errorBorderColor = Color.Red,
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        errorBorderColor = MaterialTheme.colorScheme.error,
                     )
                 )
 
@@ -373,7 +371,7 @@ fun AddVocabularyDialog(
                     Spacer8V()
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth(),
-                        color = primaryColor
+                        color = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         text = stringResource(R.string.dang_dich_tu_dong),
@@ -395,7 +393,7 @@ fun AddVocabularyDialog(
                 },
                 enabled = text.isNotBlank() && !loading,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = primaryColor
+                    containerColor = MaterialTheme.colorScheme.secondary
                 ),
                 shape = RoundedCornerShape(8.dp)
             ) {

@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,12 +45,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.noet.R
-import com.example.noet.presentation.ui.components.Space32H
 import com.example.noet.presentation.ui.components.Spacer12H
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.viewmodel.ParagraphViewModel
-import com.example.noet.ui.theme.primaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -110,7 +109,7 @@ fun ParagraphScreen(
                 .background(Color.White)
                 .border(
                     width = 1.dp,
-                    color = primaryColor.copy(alpha = 0.5f),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .padding(20.dp),
@@ -121,7 +120,7 @@ fun ParagraphScreen(
                 modifier = Modifier
                     .size(52.dp)
                     .clip(CircleShape)
-                    .background(primaryColor)
+                    .background(MaterialTheme.colorScheme.primary)
                     .clickable {
                         showBottomSheet = true
                     },
@@ -138,7 +137,7 @@ fun ParagraphScreen(
             Text(
                 text = stringResource(R.string.chon_anh_de_scan),
                 fontSize = 12.sp,
-                color = primaryColor
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Spacer16V()
@@ -164,7 +163,7 @@ fun ParagraphScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator(
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     strokeWidth = 4.dp
                 )
                 Spacer16V()
@@ -181,7 +180,7 @@ fun ParagraphScreen(
     if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = { showBottomSheet = false },
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             Column(
                 modifier = Modifier
@@ -193,7 +192,7 @@ fun ParagraphScreen(
                     text = stringResource(R.string.chon_nguon_anh),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = primaryColor
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer16V()
                 Row(
@@ -209,7 +208,7 @@ fun ParagraphScreen(
                     Icon(
                         painter = painterResource(R.drawable.ic_camera),
                         contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer8H()
                     Text(stringResource(R.string.may_anh))
@@ -227,7 +226,7 @@ fun ParagraphScreen(
                     Icon(
                         painter = painterResource(R.drawable.ic_gallery),
                         contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer8H()
                     Text(stringResource(R.string.thu_vien_anh))

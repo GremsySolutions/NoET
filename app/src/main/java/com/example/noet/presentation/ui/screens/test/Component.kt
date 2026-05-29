@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,7 +37,6 @@ import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
-import com.example.noet.ui.theme.primaryColor
 import java.util.Locale
 
 @Composable
@@ -65,7 +65,7 @@ fun CardItemTest(
             modifier = modifier
                 .size(60.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(primaryColor.copy(alpha = 0.1f)),
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
             contentAlignment = Alignment.Center
         ){
             Image(
@@ -80,7 +80,7 @@ fun CardItemTest(
             Text(
                 text = title,
                 fontSize = 18.sp,
-                color = primaryColor,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
             Spacer8V()
@@ -166,7 +166,7 @@ fun VocabularyPaintingItem(
             Icon(
                 painter = painterResource(R.drawable.ic_volume_up),
                 contentDescription = null,
-                tint = primaryColor
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -183,7 +183,7 @@ fun LoadingTestItem(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(
-            color = primaryColor
+            color = MaterialTheme.colorScheme.primary
         )
         Spacer8V()
         Text(

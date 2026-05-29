@@ -17,6 +17,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,9 +46,6 @@ import com.example.noet.presentation.ui.components.Spacer16H
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.ParagraphViewModel
-import com.example.noet.ui.theme.backgroundColor2
-import com.example.noet.ui.theme.deleteColor
-import com.example.noet.ui.theme.primaryColor
 import java.io.File
 
 @Composable
@@ -74,7 +72,7 @@ fun CardListParagraph(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(12.dp),
-            containerColor = backgroundColor2,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             title = {
                 Text(
                     text = stringResource(R.string.xac_nhan_xoa),
@@ -95,11 +93,11 @@ fun CardListParagraph(
                         viewModel.deleteParagraph(idToDelete)
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = primaryColor
+                        containerColor = MaterialTheme.colorScheme.primary
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.xoa_ngay), color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.xoa_ngay), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -180,7 +178,7 @@ fun CardItemParagraph(
             Text(
                 text = title,
                 fontSize = 16.sp,
-                color = primaryColor,
+                color = MaterialTheme.colorScheme.primary,
                 lineHeight = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -189,7 +187,7 @@ fun CardItemParagraph(
             Text(
                 text = "Dịch Anh: $originalText",
                 fontSize = 14.sp,
-                color = Color.DarkGray,
+                color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
                 lineHeight = 20.sp
@@ -198,7 +196,7 @@ fun CardItemParagraph(
             Text(
                 text = "Dịch Việt: $translateText",
                 fontSize = 14.sp,
-                color = Color.DarkGray,
+                color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
                 lineHeight = 20.sp
@@ -217,7 +215,7 @@ fun CardItemParagraph(
                 Icon(
                     painter = painterResource(R.drawable.ic_delete),
                     contentDescription = "Delete",
-                    tint = deleteColor,
+                    tint = MaterialTheme.colorScheme.error,
                     modifier = Modifier
                         .clickable { onDelete() }
                 )
@@ -254,7 +252,7 @@ fun DetailParagraphItem(
             text = stringResource(R.string.doan_van_tieng_anh),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = primaryColor
+            color = MaterialTheme.colorScheme.primary
         )
         Spacer8V()
         Text(
@@ -266,7 +264,7 @@ fun DetailParagraphItem(
             text = stringResource(R.string.doan_van_tieng_viet),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = primaryColor
+            color = MaterialTheme.colorScheme.primary
         )
         Spacer8V()
         Text(

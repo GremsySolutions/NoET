@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,7 +22,6 @@ import com.example.noet.R
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.TestViewModel
-import com.example.noet.ui.theme.primaryColor
 
 @Composable
 fun TestPictureScreen(
@@ -41,7 +41,7 @@ fun TestPictureScreen(
                     Text(
                         text = result.title,
                         fontWeight = FontWeight.Bold,
-                        color = primaryColor,
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 18.sp
                     )
                 }
@@ -64,7 +64,7 @@ fun TestPictureScreen(
                     )
                     Text(
                         text = stringResource(R.string.tu_duoc_tim_thay, result.words.size),
-                        color = primaryColor
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 Spacer8V()

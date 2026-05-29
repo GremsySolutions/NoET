@@ -32,7 +32,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.noet.R
-import com.example.noet.ui.theme.primaryColor
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -40,6 +39,7 @@ import android.Manifest
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -128,7 +128,7 @@ private fun CameraContent(
             Icon(
                 painter = painterResource(R.drawable.ic_camera),
                 contentDescription = "Chụp ảnh",
-                tint = primaryColor,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(40.dp)
             )
         }

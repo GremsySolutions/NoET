@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -51,9 +52,6 @@ import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.SettingViewModel
-import com.example.noet.ui.theme.backgroundColor
-import com.example.noet.ui.theme.backgroundColor2
-import com.example.noet.ui.theme.primaryColor
 
 @Composable
 fun SettingsScreen(
@@ -125,7 +123,7 @@ fun SettingsScreen(
                         .padding(16.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = primaryColor
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
                     ),
                     contentPadding = PaddingValues(
                         vertical = 14.dp,
@@ -135,7 +133,7 @@ fun SettingsScreen(
                     Text(
                         text = stringResource(R.string.cap_nhat_key),
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }
@@ -153,7 +151,7 @@ fun SettingsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CircularProgressIndicator(
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     strokeWidth = 4.dp
                 )
                 Spacer16V()
@@ -204,7 +202,7 @@ fun CardItemSettings(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(10.dp))
-                        .background(primaryColor.copy(alpha = 0.1f)),
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -236,7 +234,7 @@ fun CardItemSettings(
                 Icon(
                     painter = painterResource(R.drawable.ic_more_vert),
                     contentDescription = null,
-                    tint = primaryColor
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -244,7 +242,7 @@ fun CardItemSettings(
         Spacer16V()
         Text(
             text = "NHẬP ${modelName.uppercase()} API KEY",
-            color = primaryColor,
+            color = MaterialTheme.colorScheme.secondary,
             fontSize = 14.sp,
             letterSpacing = 1.sp,
             fontWeight = FontWeight.SemiBold
@@ -264,11 +262,13 @@ fun CardItemSettings(
             singleLine = true,
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
-                focusedBorderColor = backgroundColor,
-                unfocusedBorderColor = backgroundColor2,
-                errorBorderColor = Color.Red,
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                errorBorderColor = MaterialTheme.colorScheme.error,
             )
         )
 
@@ -281,7 +281,7 @@ fun CardItemSettings(
             Icon(
                 imageVector = Icons.Default.Info,
                 contentDescription = null,
-                tint = primaryColor,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(18.dp)
             )
 
@@ -299,7 +299,7 @@ fun CardItemSettings(
         ) {
             Text(
                 text = stringResource(R.string.truy_cap_tai_day),
-                color = primaryColor,
+                color = MaterialTheme.colorScheme.secondary,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier
                     .clickable {

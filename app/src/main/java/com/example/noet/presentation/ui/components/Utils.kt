@@ -19,11 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.noet.ui.theme.backgroundColor
-import com.example.noet.ui.theme.backgroundColor2
-import com.example.noet.ui.theme.primaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +45,7 @@ fun AppTopBar(
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back",
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -58,7 +54,7 @@ fun AppTopBar(
             Icon(
                 imageVector = Icons.Default.Settings,
                 contentDescription = "",
-                tint = primaryColor,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .clickable{
@@ -67,9 +63,9 @@ fun AppTopBar(
             )
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = backgroundColor,
-            navigationIconContentColor = Color.Black,
-            titleContentColor = Color.Black
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface
         ),
         modifier = modifier
     )
@@ -95,17 +91,19 @@ fun Search(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = primaryColor
+                tint = MaterialTheme.colorScheme.primary
             )
         },
         singleLine = true,
         shape = RoundedCornerShape(32.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedBorderColor = backgroundColor,
-            unfocusedBorderColor = backgroundColor2,
-            errorBorderColor = Color.Red,
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+            errorBorderColor = MaterialTheme.colorScheme.error,
         )
     )
 }
