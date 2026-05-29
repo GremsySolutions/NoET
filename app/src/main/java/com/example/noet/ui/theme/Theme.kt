@@ -1,6 +1,5 @@
 package com.example.noet.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -12,31 +11,92 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = NoETColor.primaryColorDark,
+    onPrimary = NoETColor.onprimaryColorDark,
+    primaryContainer = NoETColor.primaryContainerColorDark,
+    onPrimaryContainer = NoETColor.onprimaryContainerColorDark,
+
+    secondary = NoETColor.secondaryColorDark,
+    onSecondary = NoETColor.onsecondaryColorDark,
+    secondaryContainer = NoETColor.secondaryContainerColorDark,
+    onSecondaryContainer = NoETColor.onsecondaryContainerColorDark,
+
+    tertiary = NoETColor.tertiaryColorDark,
+    onTertiary = NoETColor.ontertiaryColorDark,
+    tertiaryContainer = NoETColor.tertiaryContainerColorDark,
+    onTertiaryContainer = NoETColor.ontertiaryContainerColorDark,
+
+    error = NoETColor.errorColorDark,
+    onError = NoETColor.onerrorColorDark,
+    errorContainer = NoETColor.errorContainerColorDark,
+    onErrorContainer = NoETColor.onerrorContainerColorDark,
+
+    surfaceDim = NoETColor.surfaceDimColorDark,
+    surface = NoETColor.surfaceColorDark,
+    surfaceBright = NoETColor.surfaceBrightColorDark,
+
+    surfaceContainerLow = NoETColor.surfaceContainerLowColorDark,
+    surfaceContainerLowest = NoETColor.surfaceContainerLowestColorDark,
+    surfaceContainer = NoETColor.surfaceContainerColorDark,
+    surfaceContainerHigh = NoETColor.surfaceContainerHighColorDark,
+    surfaceContainerHighest = NoETColor.surfaceContainerHighestColorDark,
+
+    onSurface = NoETColor.onsurfaceColorDark,
+    onSurfaceVariant = NoETColor.onsurfaceVariantColorDark,
+
+    outline = NoETColor.outlineColorDark,
+    outlineVariant = NoETColor.outlineVariantColorDark,
+
+    inverseOnSurface = NoETColor.inverseonSurfaceColorDark,
+    inverseSurface = NoETColor.inverseSurfaceColorDark,
+    inversePrimary = NoETColor.inverseprimaryColorDark
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = NoETColor.primaryColorLight,
+    onPrimary = NoETColor.onprimaryColorLight,
+    primaryContainer = NoETColor.primaryContainerColorLight,
+    onPrimaryContainer = NoETColor.onprimaryContainerColorLight,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    secondary = NoETColor.secondaryColorLight,
+    onSecondary = NoETColor.onsecondaryColorLight,
+    secondaryContainer = NoETColor.secondaryContainerColorLight,
+    onSecondaryContainer = NoETColor.onsecondaryContainerColorLight,
+
+    tertiary = NoETColor.tertiaryColorLight,
+    onTertiary = NoETColor.ontertiaryColorLight,
+    tertiaryContainer = NoETColor.tertiaryContainerColorLight,
+    onTertiaryContainer = NoETColor.ontertiaryContainerColorLight,
+
+    error = NoETColor.errorColorLight,
+    onError = NoETColor.onerrorColorLight,
+    errorContainer = NoETColor.errorContainerColorLight,
+    onErrorContainer = NoETColor.onerrorContainerColorLight,
+
+    surfaceDim = NoETColor.surfaceDimColorLight,
+    surface = NoETColor.surfaceColorLight,
+    surfaceBright = NoETColor.surfaceBrightColorLight,
+
+    surfaceContainerLow = NoETColor.surfaceContainerLowColorLight,
+    surfaceContainerLowest = NoETColor.surfaceContainerLowestColorLight,
+    surfaceContainer = NoETColor.surfaceContainerColorLight,
+    surfaceContainerHigh = NoETColor.surfaceContainerHighColorLight,
+    surfaceContainerHighest = NoETColor.surfaceContainerHighestColorLight,
+
+    onSurface = NoETColor.onsurfaceColorLight,
+    onSurfaceVariant = NoETColor.onsurfaceVariantColorLight,
+
+    outline = NoETColor.outlineColorLight,
+    outlineVariant = NoETColor.outlineVariantColorLight,
+
+    inverseOnSurface = NoETColor.inverseonSurfaceColorLight,
+    inverseSurface = NoETColor.inverseSurfaceColorLight,
+    inversePrimary = NoETColor.inverseprimaryColorLight
 )
 
 @Composable
 fun NoETTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {

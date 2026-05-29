@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -29,7 +30,6 @@ import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.ui.components.Spacer8H
 import com.example.noet.presentation.ui.components.Spacer8V
 import com.example.noet.presentation.viewmodel.TestViewModel
-import com.example.noet.ui.theme.primaryColor
 import java.util.Locale
 
 @Composable
@@ -71,7 +71,7 @@ fun TestSongScreen(
                         Text(
                             text = result.title,
                             fontWeight = FontWeight.Bold,
-                            color = primaryColor,
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 20.sp
                         )
                         Spacer8H()
@@ -88,7 +88,7 @@ fun TestSongScreen(
                             Icon(
                                 painter = painterResource(R.drawable.ic_volume_up),
                                 contentDescription = "Play lyrics",
-                                tint = primaryColor
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -111,7 +111,7 @@ fun TestSongScreen(
                     ) {
                         Text(
                             text = stringResource(R.string.ban_dich_tieng_viet),
-                            color = primaryColor,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
@@ -130,7 +130,7 @@ fun TestSongScreen(
                             Icon(
                                 painter = painterResource(R.drawable.ic_volume_up),
                                 contentDescription = "Play translation",
-                                tint = primaryColor
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

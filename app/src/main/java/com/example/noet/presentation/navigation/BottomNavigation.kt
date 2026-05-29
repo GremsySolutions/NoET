@@ -1,19 +1,18 @@
 package com.example.noet.presentation.navigation
 
-import android.net.http.SslCertificate.saveState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.painterResource
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import com.example.noet.ui.theme.originalColor
-import com.example.noet.ui.theme.primaryColor
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavigation(
@@ -29,7 +28,8 @@ fun BottomNavigation(
     val currentRoute = currentBackStackEntry?.destination?.route
 
     NavigationBar (
-        containerColor = Color.White
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 8.dp
     ){
         items.forEach { item ->
             NavigationBarItem(
@@ -49,10 +49,10 @@ fun BottomNavigation(
                     Text(item.label)
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = primaryColor,
-                    selectedTextColor = primaryColor,
-                    unselectedIconColor = originalColor,
-                    unselectedTextColor = originalColor,
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     indicatorColor = Color.Transparent
                 )
             )

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,7 +29,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.noet.presentation.ui.components.Search
 import com.example.noet.presentation.ui.components.Spacer16V
 import com.example.noet.presentation.viewmodel.VocabularyViewModel
-import com.example.noet.ui.theme.primaryColor
 import kotlin.math.roundToInt
 
 @Composable
@@ -85,12 +85,13 @@ fun HomeScreen(
                     }
                 },
             shape = CircleShape,
-            containerColor = primaryColor,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = Color.White
         ) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = null
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer
             )
         }
     }
